@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+   <div class="d-flex align-items-center justify-content-center vh-100">
+  <form method="post" class="w-100" style="max-width: 400px;">
+    {% if error %}
+      <div class="alert alert-danger">
+        {{ error.messageKey|trans(error.messageData, 'security') }}
+      </div>
+    {% endif %}
+
+    {% if app.user %}
+      <div class="mb-3 text-center">
+        You are logged in as <strong>{{ app.user.userIdentifier }}</strong>,
+        <a href="{{ path('app_logout') }}">Logout</a>
+      </div>
+    {% endif %}
+
+    <h1 class="h4 mb-4 text-center">Please sign in</h1>
+
+    <div class="mb-3">
+      <label for="username" class="form-label">Username</label>
+      <input type="text" value="{{ last_username }}" name="_username" id="username"
+             class="form-control" autocomplete="username" required autofocus>
+    </div>
+
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input type="password" name="_password" id="password"
+             class="form-control" autocomplete="current-password" required>
+    </div>
+
+    <input type="hidden" name="_csrf_token" data-controller="csrf-protection"
+           value="{{ csrf_token('authenticate') }}">
+
+    {# Opcional: remember me #}
+    {#
+    <div class="form-check mb-3">
+      <input type="checkbox" class="form-check-input" name="_remember_me" id="_remember_me">
+      <label class="form-check-label" for="_remember_me">Remember me</label>
+    </div>
+    #}
+
+    <div class="d-grid">
+      <button class="btn btn-primary btn-lg" type="submit">Sign in</button>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

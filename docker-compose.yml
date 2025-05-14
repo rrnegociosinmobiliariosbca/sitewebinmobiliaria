@@ -1,0 +1,19 @@
+services: 
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    user: "1000:1000"
+    volumes:
+      - ..:/workspaces:cached,z
+    command: sleep infinity
+    networks:
+      - app-network
+    ports:
+      - "80:80"
+
+networks:
+  app-network:
+    driver: bridge
+
+
