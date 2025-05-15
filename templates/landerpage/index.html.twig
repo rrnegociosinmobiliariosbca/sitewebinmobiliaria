@@ -5,14 +5,19 @@
 
 {% block body %}
 	<style>
+		html,
+		body {
+			height: 100%;
+			margin: 0;
+			padding: 0;
+		}
+
 		body {
 			background-image: url('/img/fondo.jpeg');
 			background-attachment: fixed;
 			background-size: cover;
 			background-repeat: no-repeat;
 			background-position: center;
-			margin: 0;
-			padding: 0;
 		}
 
 		.navbar {
@@ -64,129 +69,117 @@
 				<img src="/img/logo.png" alt="Logo" width="48">
 				<span class="ms-2">RR NEGOCIOS INMOBILIARIOS</span>
 			</a>
-			{#	<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-																															<span class="navbar-toggler-icon"></span>
-																														</button>
-																														<div class="collapse navbar-collapse" id="navbarNav">
-																															<ul class="navbar-nav ms-auto">
-																																<li class="nav-item">
-																																	<a class="nav-link" href="#">Quienes somos</a>
-																																</li>
-																																<li class="nav-item">
-																																	<a class="nav-link" href="#">ventas</a>
-																																</li>
-																																<li class="nav-item">
-																																	<a class="nav-link" href="#">arrendos</a>
-																																</li>
-																															</ul>
-																														</div>#}
 		</div>
 	</nav>
+	{% block contenidolander %}
+		<!-- Contenido principal -->
+		<div class="content-wrapper">
+			<section class="gallery-section">
+				<div class="container text-center">
 
-	<!-- Contenido principal -->
-	<div class="content-wrapper">
-		<section class="gallery-section">
-			<div class="container text-center">
+					<img src="/img/logo.png" alt="Imagen única" class="img-fluid w-75 mb-4">
 
-				<img src="/img/logo.png" alt="Imagen única" class="img-fluid w-75 mb-4">
+					<h2 class="mb-4 mt-4 text-white text-uppercase">
+						<a href="{{ path("app_buscar") }}" class="text-white text-decoration-none fw-bold">
+							Click para continuar
+						</a>
+					</h2>
 
-				<h2 class="mb-4 mt-4 text-white text-uppercase">
-					<a href="#" class="text-white text-decoration-none fw-bold">
-						Click para continuar
-					</a>
-				</h2>
+				</div>
+			</section>
+			<div class="row d-none">
+				<section class="gallery-section-fix col-sm-12">
+					<div class="container text-center">
+						<span style="color: #00b0f0; font-family: 'Arial'; font-variant: normal;" class="text-uppercase fw-bold">
+							<strong>¿QUIENES SOMOS?</strong>
+						</span>
 
+						<p class="mt-4" style=" border:none; line-height: 1.38; margin-bottom: 8pt; margin-top: 0; padding:0; text-align: justify; white-space: normal;">
+							<span style="font-family: 'Bitter', 'Arial';">
+								<strong>RR NEGOCIOS INMOBILIARIOS</strong>
+							</span>
+							es una empresa de servicios inmobiliarios que ofrece a sus clientes corporativos e individuales la posibilidad de vender, comprar o arrendar sus inmuebles, así como gestionar diferentes proyectos de vivienda, comerciales e industrial.</p>
+					</div>
+				</section>
+
+				<section class="gallery-section-fix col-sm-6">
+					<div class="container text-center">
+
+						<span style="color: #00b0f0; font-family: 'Arial'; font-variant: normal;" class="text-uppercase fw-bold">
+							<strong>mision</strong>
+						</span>
+
+						<p class="mt-4" style=" border:none; line-height: 1.38; margin-bottom: 8pt; margin-top: 0; padding:0; text-align: justify; white-space: normal;">
+							<span style="font-family: 'Bitter', 'Arial';">
+								<strong>RR NEGOCIOS INMOBILIARIOS</strong>
+							</span>
+							RR NEGOCIOS INMOBILIARIOS tiene como misión brindar servicios 
+																																									                    inmobiliarios de intermediación en la venta, arriendo, administración de unidades
+																																									                     residenciales y mantenimiento de inmuebles. Promover el desarrollo sostenible de nuevos
+																																									                      emprendimientos inmobiliarios para contribuir al mejoramiento de la calidad de vida de
+																																									                       los habitantes de Barrancabermeja y regiones aledañas, con un profundo sentido de
+																																									                        pertenencia, integridad y responsabilidad.
+						</p>
+					</div>
+				</section>
+				<section class="gallery-section-fix col-sm-6">
+					<div class="container text-center">
+
+						<span style="color: #00b0f0; font-family: 'Arial'; font-variant: normal;" class="text-uppercase fw-bold">
+							<strong>vision</strong>
+						</span>
+
+						<p class="mt-4" style=" border:none; line-height: 1.38; margin-bottom: 8pt; margin-top: 0; padding:0; text-align: justify; white-space: normal;">
+
+							Para el año 2030
+							<span style="font-family: 'Bitter', 'Arial';">
+								<strong>RR NEGOCIOS INMOBILIARIOS</strong>
+							</span>
+							se posicionará en el mercado como una
+																																									                 de las inmobiliarias preferidas e Barrancabermeja y la región con tecnología de punta y
+																																									                  talento humano competente que minimicen
+																																									                 el tiempo de operación de sus procesos y garanticen la satisfacción del cliente.
+						</p>
+						<p class="mt-2" style=" border:none; line-height: 1.38; margin-bottom: 8pt; margin-top: 0; padding:0; text-align: justify; white-space: normal;">
+
+
+							Comercializará nuevos proyectos inmobiliarios ejecutados por
+							<span style="font-family: 'Bitter', 'Arial';">
+								<strong>RR NEGOCIOS INMOBILIARIOS</strong>
+							</span>
+							o por Constructoras.</p>
+					</div>
+				</section>
+				<section class="gallery-section-fix col-sm-12">
+					<div class="container text-left m-0">
+						<span style="color: #00b0f0; font-family: 'Arial'; font-variant: normal;" class="text-uppercase fw-bold">
+							<strong>PRINCIPIOS Y VALORES</strong>
+						</span>
+						<ul>
+							<li>Honestidad</li>
+						</ul>
+					</div>
+				</section>
+				<section class="gallery-section-fix col-sm-12">
+					<div class="container text-left m-0">
+						<span style="color: #00b0f0; font-family: 'Arial'; font-variant: normal;" class="text-uppercase fw-bold">
+							<strong>NUESTROS SERVICIOS</strong>
+						</span>
+						<ul>
+							<li>Honestidad</li>
+						</ul>
+					</div>
+				</section>
 			</div>
-		</section>
-		<div class="row">
-			<section class="gallery-section-fix col-sm-12">
-				<div class="container text-center">
-					<span style="color: #00b0f0; font-family: 'Arial'; font-variant: normal;" class="text-uppercase fw-bold">
-						<strong>¿QUIENES SOMOS?</strong>
-					</span>
 
-					<p class="mt-4" style=" border:none; line-height: 1.38; margin-bottom: 8pt; margin-top: 0; padding:0; text-align: justify; white-space: normal;">
-						<span style="font-family: 'Bitter', 'Arial';">
-							<strong>RR NEGOCIOS INMOBILIARIOS</strong>
-						</span>
-						es una empresa de servicios inmobiliarios que ofrece a sus clientes corporativos e individuales la posibilidad de vender, comprar o arrendar sus inmuebles, así como gestionar diferentes proyectos de vivienda, comerciales e industrial.</p>
-				</div>
-			</section>
-
-			<section class="gallery-section-fix col-sm-6">
-				<div class="container text-center">
-
-					<span style="color: #00b0f0; font-family: 'Arial'; font-variant: normal;" class="text-uppercase fw-bold">
-						<strong>mision</strong>
-					</span>
-
-					<p class="mt-4" style=" border:none; line-height: 1.38; margin-bottom: 8pt; margin-top: 0; padding:0; text-align: justify; white-space: normal;">
-						<span style="font-family: 'Bitter', 'Arial';">
-							<strong>RR NEGOCIOS INMOBILIARIOS</strong>
-						</span>
-						RR NEGOCIOS INMOBILIARIOS tiene como misión brindar servicios 
-																												                    inmobiliarios de intermediación en la venta, arriendo, administración de unidades
-																												                     residenciales y mantenimiento de inmuebles. Promover el desarrollo sostenible de nuevos
-																												                      emprendimientos inmobiliarios para contribuir al mejoramiento de la calidad de vida de
-																												                       los habitantes de Barrancabermeja y regiones aledañas, con un profundo sentido de
-																												                        pertenencia, integridad y responsabilidad.
-					</p>
-				</div>
-			</section>
-			<section class="gallery-section-fix col-sm-6">
-				<div class="container text-center">
-
-					<span style="color: #00b0f0; font-family: 'Arial'; font-variant: normal;" class="text-uppercase fw-bold">
-						<strong>vision</strong>
-					</span>
-
-					<p class="mt-4" style=" border:none; line-height: 1.38; margin-bottom: 8pt; margin-top: 0; padding:0; text-align: justify; white-space: normal;">
-
-						Para el año 2030
-						<span style="font-family: 'Bitter', 'Arial';">
-							<strong>RR NEGOCIOS INMOBILIARIOS</strong>
-						</span>
-						se posicionará en el mercado como una
-																												                 de las inmobiliarias preferidas e Barrancabermeja y la región con tecnología de punta y
-																												                  talento humano competente que minimicen
-																												                 el tiempo de operación de sus procesos y garanticen la satisfacción del cliente.
-					</p>
-					<p class="mt-2" style=" border:none; line-height: 1.38; margin-bottom: 8pt; margin-top: 0; padding:0; text-align: justify; white-space: normal;">
-
-
-						Comercializará nuevos proyectos inmobiliarios ejecutados por
-						<span style="font-family: 'Bitter', 'Arial';">
-							<strong>RR NEGOCIOS INMOBILIARIOS</strong>
-						</span>
-						o por Constructoras.</p>
-				</div>
-			</section>
-			<section class="gallery-section-fix col-sm-12">
-				<div class="container text-left m-0">
-					<span style="color: #00b0f0; font-family: 'Arial'; font-variant: normal;" class="text-uppercase fw-bold">
-						<strong>PRINCIPIOS Y VALORES</strong>
-					</span>
-					<ul>
-						<li>Honestidad</li>
-					</ul>
-				</div>
-			</section>
-			<section class="gallery-section-fix col-sm-12">
-				<div class="container text-left m-0">
-					<span style="color: #00b0f0; font-family: 'Arial'; font-variant: normal;" class="text-uppercase fw-bold">
-						<strong>NUESTROS SERVICIOS</strong>
-					</span>
-					<ul>
-						<li>Honestidad</li>
-					</ul>
-				</div>
-			</section>
 		</div>
-		<section class="section-banner">
-			<div class="container text-center">
-				<img src="/img/banner.png" alt="Imagen única" class="img-fluid w-100">
-			</div>
-		</section>
-	</div><!-- Footer --><footer class="bg-dark text-white text-center py-3">
+	{% endblock %}
+			<section class="section-banner">
+				<div class="container text-center">
+					<img src="/img/banner.png" alt="Imagen única" class="img-fluid w-100">
+				</div>
+			</section>
+	<!-- Footer -->
+	<footer class="bg-dark text-white text-center py-3">
 		Todos los derechos reservados y Política de Protección de Datos - RR Negocios Inmobiliarios 2023  &copy;</footer>
 {% endblock %}

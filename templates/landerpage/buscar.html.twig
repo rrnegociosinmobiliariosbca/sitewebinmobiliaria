@@ -1,0 +1,36 @@
+{% extends '/landerpage/index.html.twig' %}
+
+{% block title %}RR NEGOCIOS INMOBILIARIOS
+{% endblock %}
+
+{% block contenidolander %}
+
+	<!-- Contenido principal -->
+	<div class="content-wrapper">
+
+		<div class="row align-items-center justify-content-center  m-5">
+
+			<section class="gallery-section-fix col-sm-5">
+				<div class="container text-center">
+
+					<h2 class="text-uppercase">
+						<a href="{{ path("app_buscar_ventas") }}" class="text-decoration-none fw-bold">
+							ventas
+						</a>
+					</h2>
+				</div>
+			</section>
+			<section class="gallery-section-fix col-sm-5">
+				<div class="container text-center">
+
+					<h2 class="text-uppercase">
+						<a href="{{ path("app_buscar_arrendo") }}" class=" text-decoration-none fw-bold">
+							arrendos
+						</a>
+					</h2>
+
+
+				</div>
+			</section>
+		</div>
+	{% endblock %}
