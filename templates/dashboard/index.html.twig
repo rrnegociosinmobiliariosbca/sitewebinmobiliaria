@@ -4,119 +4,145 @@
 {% endblock %}
 
 {% block body %}
-<style>
-    body {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: #f8f9fa;
-    }
-    .form-wrapper {
-      max-width: 700px;
-      width: 100%;
-      background: white;
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
-      margin: 2em;
-    }
-  </style>
-	 <!-- Contenedor fluido y centrado -->
-  <div class="container-fluid d-flex justify-content-center align-items-center">
-    <div class="form-wrapper">
-      <h2 class="text-center mb-4 fw-bold">Ingresar Inmueble</h2>
+	<style>
+		body {
+			min-height: 100vh;
+			background-color: #f8f9fa;
+		}
 
-      <!-- Formulario -->
-      <form id="inmuebleForm">
-        <div class="mb-3">
-          <label for="inmueble" class="form-label">Inmueble</label>
-          <input type="text" class="form-control" id="inmueble" name="inmueble" required>
-        </div>
-        <div class="mb-3">
-          <label for="valor" class="form-label">Valor</label>
-          <input type="text" class="form-control" id="valor" name="valor" required>
-        </div>
-        <div class="mb-3">
-          <label for="direccion" class="form-label">Dirección</label>
-          <input type="text" class="form-control" id="direccion" name="direccion" required>
-        </div>
-        <div class="mb-3">
-          <label for="barrio" class="form-label">Barrio</label>
-          <input type="text" class="form-control" id="barrio" name="barrio" required>
-        </div>
-        <div class="mb-3">
-          <label for="observacion" class="form-label">Observación</label>
-          <input type="text" class="form-control" id="observacion" name="observacion" required>
-        </div>
-        <div class="mb-3">
-          <label for="ubicacion" class="form-label">Ubicación (Google Maps)</label>
-          <input type="url" class="form-control" id="ubicacion" name="ubicacion" required>
-        </div>
-        <div class="mb-3">
-          <label for="tipo_inmueble" class="form-label">Tipo de Inmueble</label>
-          <input type="text" class="form-control" id="tipo_inmueble" name="tipo_inmueble" required>
-        </div>
-        <div class="mb-3">
-          <label for="codigo_inmueble" class="form-label">Código del Inmueble</label>
-          <input type="text" class="form-control" id="codigo_inmueble" name="codigo_inmueble" required>
-        </div>
-        <button type="submit" class="btn btn-primary w-100">Guardar</button>
-      </form>
-    </div>
-  </div>
+		.form-wrapper {
+			background: white;
+			padding: 30px;
+			border-radius: 15px;
+			box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+			width: 100%;
+		}
+	</style>
 
-<script>
-    document.getElementById('inmuebleForm').addEventListener('submit', function(event) {
-        event.preventDefault(); // Evitar el envío del formulario por defecto
-    
-        // Obtener los valores de los campos
-        const inmueble = document.getElementById('inmueble').value;
-        const valor = document.getElementById('valor').value;
-        const direccion = document.getElementById('direccion').value;
-        const barrio = document.getElementById('barrio').value;
-        const observacion = document.getElementById('observacion').value;
-        const ubicacion = document.getElementById('ubicacion').value;
-        const tipo_inmueble = document.getElementById('tipo_inmueble').value;
-        const codigo_inmueble = document.getElementById('codigo_inmueble').value;
-    
- 
-        if (!inmueble || !valor || !direccion || !barrio || !observacion || !ubicacion || !tipo_inmueble || !codigo_inmueble) {
-            alert('Por favor, completa todos los campos.');
-            return;
-        }
-      fetch('{{ path("app_dashboard_endpoint_registrar_inmueble")}}', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                inmueble,
-                valor,
-                direccion,
-                barrio,
-                observacion,
-                ubicacion,
-                tipo_inmueble,
-                codigo_inmueble
-            })
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Error al enviar los datos');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Datos enviados con éxito:', data);
-            alert('Inmueble guardado exitosamente');
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            //alert('Hubo un problema al guardar el inmueble');
-        });         
+	<!-- Contenedor del Formulario -->
+	<div class="container-fluid py-4">
+		<div class="row justify-content-center">
+			<div class="col-lg-8">
+				<div class="form-wrapper">
+					<h2 class="text-center mb-4 fw-bold">Ingresar Inmueble</h2>
 
-     
-    });
-</script>
+					<form id="inmuebleForm">
+						<div class="row">
+							<div class="col-md-6 mb-3">
+								<label for="inmueble" class="form-label">Inmueble</label>
+								<input type="text" class="form-control" id="inmueble" name="inmueble" required>
+							</div>
+							<div class="col-md-6 mb-3">
+								<label for="valor" class="form-label">Valor</label>
+								<input type="text" class="form-control" id="valor" name="valor" required>
+							</div>
+							<div class="col-md-6 mb-3">
+								<label for="direccion" class="form-label">Dirección</label>
+								<input type="text" class="form-control" id="direccion" name="direccion" required>
+							</div>
+							<div class="col-md-6 mb-3">
+								<label for="barrio" class="form-label">Barrio</label>
+								<input type="text" class="form-control" id="barrio" name="barrio" required>
+							</div>
+							<div class="col-md-6 mb-3">
+								<label for="observacion" class="form-label">Observación</label>
+								<input type="text" class="form-control" id="observacion" name="observacion" required>
+							</div>
+							<div class="col-md-6 mb-3">
+								<label for="ubicacion" class="form-label">Ubicación (Google Maps)</label>
+								<input type="url" class="form-control" id="ubicacion" name="ubicacion" required>
+							</div>
+							<div class="col-md-6 mb-3">
+								<label for="tipo_inmueble" class="form-label">Tipo de Inmueble</label>
+								<input type="text" class="form-control" id="tipo_inmueble" name="tipo_inmueble" required>
+							</div>
+							<div class="col-md-6 mb-3">
+								<label for="codigo_inmueble" class="form-label">Código del Inmueble</label>
+								<input type="text" class="form-control" id="codigo_inmueble" name="codigo_inmueble" required>
+							</div>
+						</div>
+						<button type="submit" class="btn btn-primary w-100">Guardar</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Contenedor de la Tabla -->
+	<div class="container-fluid py-4">
+		<div class="table-responsive">
+			<table data-toggle="table" data-url="{{ path('app_dashboard_endpoint_list_inmueble') }}" data-pagination="true" class="table table-bordered table-hover table-striped table-sm w-100">
+				<thead>
+					<tr>
+						<th data-field="id" data-sortable="true">ID</th>
+						<th data-field="inmueble" data-sortable="true">Inmueble</th>
+						<th data-field="valor" data-sortable="true">Valor</th>
+						<th data-field="direccion">Dirección</th>
+						<th data-field="barrio">Barrio</th>
+						<th data-field="observacion">Observación</th>
+						<th data-field="ubicacion" data-formatter="linkFormatter">Ubicación</th>
+						<th data-field="tipo_inmueble">Tipo</th>
+						<th data-field="codigo_inmueble">Código</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+	</div>
+
+	<script>
+		function linkFormatter(value, row, index) {
+return `<a href="${value}" target="_blank">Ver Mapa</a>`;
+}
+document.getElementById('inmuebleForm').addEventListener('submit', function (event) {
+event.preventDefault();
+// Evitar el envío del formulario por defecto
+
+// Obtener los valores de los campos
+const inmueble = document.getElementById('inmueble').value;
+const valor = document.getElementById('valor').value;
+const direccion = document.getElementById('direccion').value;
+const barrio = document.getElementById('barrio').value;
+const observacion = document.getElementById('observacion').value;
+const ubicacion = document.getElementById('ubicacion').value;
+const tipo_inmueble = document.getElementById('tipo_inmueble').value;
+const codigo_inmueble = document.getElementById('codigo_inmueble').value;
+
+
+if (! inmueble || ! valor || ! direccion || ! barrio || ! observacion || ! ubicacion || ! tipo_inmueble || ! codigo_inmueble) {
+alert('Por favor, completa todos los campos.');
+return;
+}
+fetch('{{ path("app_dashboard_endpoint_registrar_inmueble") }}', {
+method: 'POST',
+headers: {
+'Content-Type': 'application/json'
+},
+body: JSON.stringify(
+{
+inmueble,
+valor,
+direccion,
+barrio,
+observacion,
+ubicacion,
+tipo_inmueble,
+codigo_inmueble
+}
+)
+}).then(response => {
+if (!response.ok) {
+throw new Error('Error al enviar los datos');
+}
+return response.json();
+}).then(data => {
+console.log('Datos enviados con éxito:', data);
+alert('Inmueble guardado exitosamente');
+}).catch(error => {
+console.error('Error:', error);
+// alert('Hubo un problema al guardar el inmueble');
+});
+
+
+});
+	</script>
 {% endblock %}

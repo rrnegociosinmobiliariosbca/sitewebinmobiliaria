@@ -62,4 +62,29 @@ final class DashboardController extends AbstractController
         ];
         return $this->json($response);
     }
+    #[Route('/dashboard/endpoint/list_inmueble', name: 'app_dashboard_endpoint_list_inmueble')]
+    public function app_dashboard_endpoint_list_inmueble(PropertyRepository $propertyRepository): JsonResponse
+    {
+        // Obtener todos los registros de la tabla Property
+        $properties = $propertyRepository->findAll();
+
+        // Convertir los registros a un array
+        $data = [];
+        foreach ($properties as $property) {
+            $data[] = [
+                'id' => $property->getId(),
+                'inmueble' => $property->getInmueble(),
+                'valor' => $property->getValor(),
+                'direccion' => $property->getDireccion(),
+                'barrio' => $property->getBarrio(),
+                'observacion' => $property->getObservacion(),
+                'ubicacion' => $property->getUbicacion(),
+                'tipo_inmueble' => $property->getTipoInmueble(),
+                'codigo_inmueble' => $property->getCodigoInmueble(),
+            ];
+        }
+
+
+        return new JsonResponse($data);
+    }
 }

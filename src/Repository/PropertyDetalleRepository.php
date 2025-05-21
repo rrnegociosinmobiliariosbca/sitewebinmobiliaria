@@ -16,28 +16,12 @@ class PropertyDetalleRepository extends ServiceEntityRepository
         parent::__construct($registry, PropertyDetalle::class);
     }
 
-    //    /**
-    //     * @return PropertyDetalle[] Returns an array of PropertyDetalle objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('p.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function save(PropertyDetalle $entity, bool $flush = true): void
+    {
+        $this->getEntityManager()->persist($entity);
 
-    //    public function findOneBySomeField($value): ?PropertyDetalle
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
 }
