@@ -28,5 +28,16 @@
 					</h2>
 				</div>
 			</section>
+			{% if app.user %}
+			<section class="gallery-section-fix col-sm-5">
+				<div class="container text-center">
+					<h2 class="text-uppercase">
+						<a href="{{ path("app_dashboard") }}" class=" text-decoration-none fw-bold">
+							agregar inmueble
+						</a>
+					</h2>
+				</div>
+			</section>
+			{% endif %}
 		</div>
 	{% endblock %}
