@@ -87,7 +87,7 @@ final class LanderpageController extends AbstractController
     }
 
     #[Route('/imagen/agregar', name: 'agregar_imagen', methods: ['POST'])]
-    public function agregar(Request $request, SluggerInterface $slugger, PropertyRepository $propertyRepo,HttpClientInterface $httpClient,PropertyImageRepository $imageRepository): Response
+    public function agregar(Request $request, SluggerInterface $slugger, PropertyRepository $propertyRepo, HttpClientInterface $httpClient, PropertyImageRepository $imageRepository): Response
     {
         $cardId = $request->request->get('cardId');
         $imagenLink = $request->request->get('imagenLink');
@@ -116,8 +116,7 @@ final class LanderpageController extends AbstractController
 
             $imagen->setUrl("/img/" . $newFilename);
             $imageRepository->save($imagen);
-        }
-        elseif ($imagenLink) {
+        } elseif ($imagenLink) {
             // Validar link
             try {
                 $response = $httpClient->request('HEAD', $imagenLink);
@@ -134,20 +133,12 @@ final class LanderpageController extends AbstractController
             } catch (\Exception $e) {
                 return new Response('Error al validar el link: ' . $e->getMessage(), 400);
             }
-        }
-        else {
+        } else {
             return new Response('No se proporcionó imagen ni link', 400);
         }
 
 
 
         return $this->redirectToRoute('app_buscar_arrendo');
-
-
-
-
-
-
-
-}
+    }
 }

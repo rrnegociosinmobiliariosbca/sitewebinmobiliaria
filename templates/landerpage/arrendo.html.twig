@@ -76,7 +76,9 @@
 											<div class="accordion-body p-0">
 												<ul class="list-group">
 													{% for item in card.detalles %}
-														<li class="list-group-item"><i class="bi bi-bookmark-star-fill"></i>  {{ item }}</li>
+														<li class="list-group-item">
+															<i class="bi bi-bookmark-star-fill"></i>
+															{{ item }}</li>
 													{% endfor %}
 												</ul>
 											</div>
@@ -172,45 +174,37 @@
 			document.addEventListener("DOMContentLoaded", function () {
 
 
+const inputArchivo = document.getElementById('imagenArchivo');
+const inputLink = document.getElementById('imagenLink');
 
+inputArchivo.addEventListener('change', function () {
+if (inputArchivo.files.length > 0) {
+inputLink.parentElement.style.display = 'none';
+} else {
+inputLink.parentElement.style.display = '';
+}
+});
 
-					const inputArchivo = document.getElementById('imagenArchivo');
-					const inputLink = document.getElementById('imagenLink');
+inputLink.addEventListener('input', function () {
+if (inputLink.value.trim() !== '') {
+inputArchivo.parentElement.style.display = 'none';
+} else {
+inputArchivo.parentElement.style.display = '';
+}
+});
 
-					inputArchivo.addEventListener('change', function () {
-					if (inputArchivo.files.length > 0) {
-					inputLink.parentElement.style.display = 'none';
-				} else {
-					inputLink.parentElement.style.display = '';
-				}
-				});
+// Restaura visibilidad al abrir el modal
+const modalImagen = document.getElementById('modalImagen');
+modalImagen.addEventListener('show.bs.modal', function (event) {
+const button = event.relatedTarget;
+const cardId = button.getAttribute('data-id');
+document.getElementById('cardId').value = cardId;
 
-					inputLink.addEventListener('input', function () {
-					if (inputLink.value.trim() !== '') {
-					inputArchivo.parentElement.style.display = 'none';
-				} else {
-					inputArchivo.parentElement.style.display = '';
-				}
-				});
-
-					// Restaura visibilidad al abrir el modal
-					const modalImagen = document.getElementById('modalImagen');
-					modalImagen.addEventListener('show.bs.modal', function (event) {
-					const button = event.relatedTarget;
-					const cardId = button.getAttribute('data-id');
-					document.getElementById('cardId').value = cardId;
-
-					inputArchivo.value = '';
-					inputLink.value = '';
-					inputArchivo.parentElement.style.display = '';
-					inputLink.parentElement.style.display = '';
-				});
-
-
-
-
-
-
+inputArchivo.value = '';
+inputLink.value = '';
+inputArchivo.parentElement.style.display = '';
+inputLink.parentElement.style.display = '';
+});
 
 
 const modal = new bootstrap.Modal(document.getElementById("detalleModalGlobal"));
