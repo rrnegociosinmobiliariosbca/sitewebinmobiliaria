@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
+use App\Entity\User;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
@@ -21,6 +24,40 @@ class SecurityController extends AbstractController
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error,
+        ]);
+    }
+
+ #[Route(path: '/register', name: 'app_login')]
+    public function register(UserRepository $userRepository): JsonResponse
+    {
+       // crear dos variable uana para el usuario y otra para la contraseña
+        $user = 'admin';  
+        $password = 'admin';
+
+        // Verificar si el usuario ya existe
+
+        $existingUser = $userRepository->findOneBy(['username' => $user]);
+        if ($existingUser) {
+            return new JsonResponse(['error' => 'El usuario ya existe'], Response::HTTP_CONFLICT);
+        }
+
+
+      //hashear la contraseña antes de guardarla
+
+        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+        // crear un nuevo usuario
+        $newUser = new User();
+        $newUser->setUsername($user);
+        $newUser->setPassword($hashedPassword);
+        $newUser->setRoles(['ROLE_ADMIN']); // Asignar el rol de administrador
+        // guardar el usuario en la base de datos
+        $userRepository->save($newUser, true);      
+         
+        // retornar un JsonResponse con el usuario y la contraseña
+
+        return new JsonResponse([
+            'user' => $user,
+            'password' => $password,
         ]);
     }
 
