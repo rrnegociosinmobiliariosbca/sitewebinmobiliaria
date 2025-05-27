@@ -25,4 +25,14 @@ class PropertyImageRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+    //eliminar
+    public function remove(PropertyImage $entity, bool $flush = true): void
+    {
+        $this->getEntityManager()->remove($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
 }

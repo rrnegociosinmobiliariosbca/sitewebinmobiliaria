@@ -5,249 +5,287 @@
 
 {% block contenidolander %}
 
-	<!-- Contenido principal -->
-	<div class="content-wrapper row">
+<!-- Contenido principal -->
+<div class="content-wrapper row">
 
-		{% for card in cards %}
-			<section class="gallery-section col-sm-12 col-md-6 col-lg-4 mb-4">
-				<div
-					class="card shadow-lg">
-					<!-- Carrusel -->
-					<div id="carouselExample{{ loop.index }}" class="carousel slide open-gallery" data-images='{{ card.imagenes|json_encode|e("html_attr") }}'>
+	{% for card in cards %}
+	<section class="gallery-section col-sm-12 col-md-6 col-lg-4 mb-4">
+		<div class="card shadow-lg">
+			<!-- Carrusel -->
+<div id="carouselExample{{ loop.index }}" class="carousel slide" >
 
-						<div class="carousel-inner ratio ratio-16x9">
+    <div class="carousel-inner ratio ratio-16x9">
+        {% for img in card.imagenes %}
+            <div class="carousel-item {% if loop.first %}active{% endif %}">
+                <div class="position-relative w-100 h-100">
+                    {% if app.user and img.id != 0%}
+                        <a href="{{ path('app_imagen_eliminar', {"id": img.id}) }}"
+                           class="btn btn-danger btn-sm position-absolute top-0 end-0 m-2 z-3"
+                           onclick="return confirm('¿Estás seguro de eliminar esta imagen?');"
+                           title="Eliminar imagen">
+                            <i class="bi bi-trash-fill"></i>
+                        </a>
+                    {% endif %}
+                    <img src="{{ img.url }}" class="d-block w-100 h-100 object-fit-cover" alt="Imagen">
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 
-							{% for img in card.imagenes %}
-								<div class="carousel-item {% if loop.first %}active{% endif %}">
-									<img src="{{ img }}" class="d-block w-100 h-100 object-fit-cover" alt="Imagen">
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample{{ loop.index }}"
+            data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Anterior</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample{{ loop.index }}"
+            data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Siguiente</span>
+    </button>
+</div>
+
+			<!-- Información -->
+			<div class="card-body">
+				<ul class="list-group">
+				
+					<li class="list-group-item">
+						<button type="button" class="btn btn-outline-dark btn-sm open-gallery"
+							data-bs-toggle="modal" data-bs-target="#galleryModal"
+							data-images="{{ card.imagenes|json_encode }}">
+							<i class="fa-solid fa-image"></i> Ver Galería
+						</button>
+					<li class="list-group-item">INMUEBLE:
+						{{ card.inmueble }}</li>
+					<li class="list-group-item">VALOR: ${{ card.valor|number_format(0, '.', '.') }}</li>
+					<li class="list-group-item">
+						DIRECCIÓN:
+						{{ card.direccion }}
+						<a href="{{ card.ubicacion }}" class="btn btn-light btn-sm">Ubicación
+							<i class="fa-solid fa-location-dot text-danger"></i>
+						</a>
+					</li>
+					<li class="list-group-item">BARRIO:
+						{{ card.barrio }}</li>
+					<li class="list-group-item">OBSERVACIONES:
+						{{ card.observacion }}</li>
+					{% if app.user %}
+					<li class="list-group-item">
+						<button type="button" class="btn btn-outline-primary btn-sm mt-2 open-detalle-modal"
+							data-id="{{ card.id }}" data-inmueble="{{ card.inmueble }}">
+							Agregar Detalle
+						</button>
+						<button type="button" class="btn btn-outline-success btn-sm mt-2" data-bs-toggle="modal"
+							data-bs-target="#modalImagen" data-id="{{ card.id }}">
+							Agregar Imagen
+						</button>
+					</li>
+
+					{% endif %}
+					<li class="list-group-item">
+
+						<!-- Acordeón -->
+						<div class="accordion accordion-flush" id="accordionFlushExample{{ loop.index }}">
+							<div class="accordion-item">
+								<h2 class="accordion-header">
+									<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+										data-bs-target="#flush-collapseOne{{ loop.index }}" aria-expanded="false"
+										aria-controls="flush-collapseOne{{ loop.index }}">
+										Detalles
+									</button>
+								</h2>
+								<div id="flush-collapseOne{{ loop.index }}" class="accordion-collapse collapse"
+									data-bs-parent="#accordionFlushExample{{ loop.index }}">
+									<div class="accordion-body p-0">
+										<ul class="list-group">
+											{% for item in card.detalles %}
+											<li class="list-group-item">
+												<i class="bi bi-bookmark-star-fill"></i>
+												{{ item.texto }}
+												{% if app.user %}
+												<a href='{{ path(' app_propertydetalle_delete', {"id": item.id}) }}'
+													class="btn btn-danger btn-sm float-end ms-2"
+													onclick="return confirm('¿Estás seguro de eliminar este detalle?');">
+													<i class="bi bi-trash-fill"></i>
+												</a>
+												{% endif %}
+											</li>
+											{% endfor %}
+										</ul>
+									</div>
 								</div>
-							{% endfor %}
-
+							</div>
 						</div>
-						<button class="carousel-control-prev" type="button" data-bs-target="#carouselExample{{ loop.index }}" data-bs-slide="prev">
+					</li>
+				</ul>
+			</div>
+		</div>
+	</section>
+	{% endfor %}
+
+
+	<!-- Modal de Galería -->
+	<div class="modal fade" id="galleryModal" tabindex="-1" aria-labelledby="galleryModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg modal-dialog-centered">
+			<div class="modal-content bg-dark text-white">
+				<div class="modal-header border-0">
+					<h5 class="modal-title" id="galleryModalLabel">Galería de imágenes</h5>
+					<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+						aria-label="Cerrar"></button>
+				</div>
+				<div class="modal-body p-0">
+					<div id="modalCarousel" class="carousel slide">
+						<div class="carousel-inner" id="modalCarouselInner"></div>
+						<button class="carousel-control-prev" type="button" data-bs-target="#modalCarousel"
+							data-bs-slide="prev">
 							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 							<span class="visually-hidden">Anterior</span>
 						</button>
-						<button class="carousel-control-next" type="button" data-bs-target="#carouselExample{{ loop.index }}" data-bs-slide="next">
+						<button class="carousel-control-next" type="button" data-bs-target="#modalCarousel"
+							data-bs-slide="next">
 							<span class="carousel-control-next-icon" aria-hidden="true"></span>
 							<span class="visually-hidden">Siguiente</span>
 						</button>
 					</div>
-
-					<!-- Información -->
-					<div class="card-body">
-						<ul class="list-group">
-							<li class="list-group-item">INMUEBLE:
-								{{ card.inmueble }}</li>
-							<li class="list-group-item">VALOR: ${{ card.valor|number_format(0, '.', '.') }}</li>
-							<li class="list-group-item">
-								DIRECCIÓN:
-								{{ card.direccion }}
-								<a href="{{ card.ubicacion }}" class="btn btn-light btn-sm">Ubicación
-									<i class="fa-solid fa-location-dot text-danger"></i>
-								</a>
-							</li>
-							<li class="list-group-item">BARRIO:
-								{{ card.barrio }}</li>
-							<li class="list-group-item">OBSERVACIONES:
-								{{ card.observacion }}</li>
-							<li class="list-group-item">
-								<button type="button" class="btn btn-outline-primary btn-sm mt-2 open-detalle-modal" data-id="{{ card.id }}" data-inmueble="{{ card.inmueble }}">
-									Agregar Detalle
-								</button>
-								<button type="button" class="btn btn-outline-success btn-sm mt-2" data-bs-toggle="modal" data-bs-target="#modalImagen" data-id="{{ card.id }}">
-									Agregar Imagen
-								</button>
-							</li>
-
-
-							<li
-								class="list-group-item">
-
-								<!-- Acordeón -->
-								<div class="accordion accordion-flush" id="accordionFlushExample{{ loop.index }}">
-									<div class="accordion-item">
-										<h2 class="accordion-header">
-											<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne{{ loop.index }}" aria-expanded="false" aria-controls="flush-collapseOne{{ loop.index }}">
-												Detalles
-											</button>
-										</h2>
-										<div id="flush-collapseOne{{ loop.index }}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample{{ loop.index }}">
-											<div class="accordion-body p-0">
-												<ul class="list-group">
-													{% for item in card.detalles %}
-														<li class="list-group-item">
-															<i class="bi bi-bookmark-star-fill"></i>
-															{{ item }}</li>
-													{% endfor %}
-												</ul>
-											</div>
-										</div>
-									</div>
-								</div>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</section>
-		{% endfor %}
-
-
-		<!-- Modal de Galería -->
-		<div class="modal fade" id="galleryModal" tabindex="-1" aria-labelledby="galleryModalLabel" aria-hidden="true">
-			<div class="modal-dialog modal-lg modal-dialog-centered">
-				<div class="modal-content bg-dark text-white">
-					<div class="modal-header border-0">
-						<h5 class="modal-title" id="galleryModalLabel">Galería de imágenes</h5>
-						<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-					</div>
-					<div class="modal-body p-0">
-						<div id="modalCarousel" class="carousel slide">
-							<div class="carousel-inner" id="modalCarouselInner"></div>
-							<button class="carousel-control-prev" type="button" data-bs-target="#modalCarousel" data-bs-slide="prev">
-								<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-								<span class="visually-hidden">Anterior</span>
-							</button>
-							<button class="carousel-control-next" type="button" data-bs-target="#modalCarousel" data-bs-slide="next">
-								<span class="carousel-control-next-icon" aria-hidden="true"></span>
-								<span class="visually-hidden">Siguiente</span>
-							</button>
-						</div>
-					</div>
 				</div>
 			</div>
 		</div>
-		<!-- Modal global para agregar detalle -->
-		<div class="modal fade" id="detalleModalGlobal" tabindex="-1" aria-labelledby="detalleModalGlobalLabel" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered">
-				<div class="modal-content">
-					<form id="detalleFormGlobal" method="post" action="{{ path('app_propertydetalle_create') }}">
-						<div class="modal-header">
-							<h5 class="modal-title" id="detalleModalGlobalLabel">Agregar Detalle</h5>
-							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-						</div>
-						<div class="modal-body">
-							<input type="hidden" name="property_id" id="detallePropertyId">
-							<div class="mb-3">
-								<label for="detalleTextoGlobal" class="form-label">Detalle</label>
-								<textarea class="form-control" id="detalleTextoGlobal" name="detalle" rows="3" required></textarea>
-							</div>
-						</div>
-						<div class="modal-footer">
-							<button type="submit" class="btn btn-primary">Guardar</button>
-							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-		<!-- Modal para cargar imagen -->
-		<div class="modal fade" id="modalImagen" tabindex="-1" aria-labelledby="modalImagenLabel" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
+	</div>
+	<!-- Modal global para agregar detalle -->
+	<div class="modal fade" id="detalleModalGlobal" tabindex="-1" aria-labelledby="detalleModalGlobalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<form id="detalleFormGlobal" method="post" action="{{ path('app_propertydetalle_create') }}">
 					<div class="modal-header">
-						<h5 class="modal-title" id="modalImagenLabel">Agregar Imagen</h5>
+						<h5 class="modal-title" id="detalleModalGlobalLabel">Agregar Detalle</h5>
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
 					</div>
 					<div class="modal-body">
-						<form id="formAgregarImagen" method="POST" action="{{ path('agregar_imagen') }}" enctype="multipart/form-data">
-							<div class="mb-3">
-								<label for="imagenArchivo" class="form-label">Subir Imagen</label>
-								<input type="file" class="form-control" id="imagenArchivo" name="imagenArchivo" accept="image/*">
-							</div>
-							<div class="mb-3">
-								<label for="imagenLink" class="form-label">O enlace de imagen</label>
-								<input type="url" class="form-control" id="imagenLink" name="imagenLink" placeholder="https://example.com/imagen.jpg">
-							</div>
-							<input type="hidden" name="cardId" id="cardId">
-						</form>
+						<input type="hidden" name="property_id" id="detallePropertyId">
+						<div class="mb-3">
+							<label for="detalleTextoGlobal" class="form-label">Detalle</label>
+							<textarea class="form-control" id="detalleTextoGlobal" name="detalle" rows="3"
+								required></textarea>
+						</div>
 					</div>
 					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary">Guardar</button>
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-						<button type="submit" form="formAgregarImagen" class="btn btn-primary">Guardar Imagen</button>
 					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!-- Modal para cargar imagen -->
+	<div class="modal fade" id="modalImagen" tabindex="-1" aria-labelledby="modalImagenLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="modalImagenLabel">Agregar Imagen</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+				</div>
+				<div class="modal-body">
+					<form id="formAgregarImagen" method="POST" action="{{ path('agregar_imagen') }}"
+						enctype="multipart/form-data">
+						<div class="mb-3">
+							<label for="imagenArchivo" class="form-label">Subir Imagen</label>
+							<input type="file" class="form-control" id="imagenArchivo" name="imagenArchivo"
+								accept="image/*">
+						</div>
+						<div class="mb-3">
+							<label for="imagenLink" class="form-label">O enlace de imagen</label>
+							<input type="url" class="form-control" id="imagenLink" name="imagenLink"
+								placeholder="https://example.com/imagen.jpg">
+						</div>
+						<input type="hidden" name="cardId" id="cardId">
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+					<button type="submit" form="formAgregarImagen" class="btn btn-primary">Guardar Imagen</button>
 				</div>
 			</div>
 		</div>
+	</div>
 
-		<script>
-			document.addEventListener("DOMContentLoaded", function () {
-
-
-const inputArchivo = document.getElementById('imagenArchivo');
-const inputLink = document.getElementById('imagenLink');
-
-inputArchivo.addEventListener('change', function () {
-if (inputArchivo.files.length > 0) {
-inputLink.parentElement.style.display = 'none';
-} else {
-inputLink.parentElement.style.display = '';
-}
-});
-
-inputLink.addEventListener('input', function () {
-if (inputLink.value.trim() !== '') {
-inputArchivo.parentElement.style.display = 'none';
-} else {
-inputArchivo.parentElement.style.display = '';
-}
-});
-
-// Restaura visibilidad al abrir el modal
-const modalImagen = document.getElementById('modalImagen');
-modalImagen.addEventListener('show.bs.modal', function (event) {
-const button = event.relatedTarget;
-const cardId = button.getAttribute('data-id');
-document.getElementById('cardId').value = cardId;
-
-inputArchivo.value = '';
-inputLink.value = '';
-inputArchivo.parentElement.style.display = '';
-inputLink.parentElement.style.display = '';
-});
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
 
 
-const modal = new bootstrap.Modal(document.getElementById("detalleModalGlobal"));
-const form = document.getElementById("detalleFormGlobal");
-const inputId = document.getElementById("detallePropertyId");
-const titulo = document.getElementById("detalleModalGlobalLabel");
-const textarea = document.getElementById("detalleTextoGlobal");
+			const inputArchivo = document.getElementById('imagenArchivo');
+			const inputLink = document.getElementById('imagenLink');
 
-document.querySelectorAll(".open-detalle-modal").forEach(btn => {
-btn.addEventListener("click", () => {
-const id = btn.getAttribute("data-id");
-const inmueble = btn.getAttribute("data-inmueble");
+			inputArchivo.addEventListener('change', function () {
+				if (inputArchivo.files.length > 0) {
+					inputLink.parentElement.style.display = 'none';
+				} else {
+					inputLink.parentElement.style.display = '';
+				}
+			});
 
-inputId.value = id;
-titulo.textContent = `Agregar Detalle a ${inmueble}`;
-textarea.value = ""; // limpiar textarea anterior
+			inputLink.addEventListener('input', function () {
+				if (inputLink.value.trim() !== '') {
+					inputArchivo.parentElement.style.display = 'none';
+				} else {
+					inputArchivo.parentElement.style.display = '';
+				}
+			});
 
-modal.show();
-});
-});
-});
-document.addEventListener("DOMContentLoaded", function () {
-const modal = new bootstrap.Modal(document.getElementById('galleryModal'));
-const modalInner = document.getElementById('modalCarouselInner');
+			// Restaura visibilidad al abrir el modal
+			const modalImagen = document.getElementById('modalImagen');
+			modalImagen.addEventListener('show.bs.modal', function (event) {
+				const button = event.relatedTarget;
+				const cardId = button.getAttribute('data-id');
+				document.getElementById('cardId').value = cardId;
 
-document.querySelectorAll(".open-gallery").forEach(carrusel => {
-carrusel.addEventListener("click", () => {
-const images = JSON.parse(carrusel.dataset.images);
-modalInner.innerHTML = "";
+				inputArchivo.value = '';
+				inputLink.value = '';
+				inputArchivo.parentElement.style.display = '';
+				inputLink.parentElement.style.display = '';
+			});
 
-images.forEach((src, index) => {
-const item = document.createElement("div");
-item.className = `carousel-item ${
-index === 0 ? "active" : ""
-}`;
-item.innerHTML = `<img src="${src}" class="d-block w-100" alt="Imagen ampliada">`;
-modalInner.appendChild(item);
-});
 
-modal.show();
-});
-});
-});
-		</script>
+			const modal = new bootstrap.Modal(document.getElementById("detalleModalGlobal"));
+			const form = document.getElementById("detalleFormGlobal");
+			const inputId = document.getElementById("detallePropertyId");
+			const titulo = document.getElementById("detalleModalGlobalLabel");
+			const textarea = document.getElementById("detalleTextoGlobal");
+
+			document.querySelectorAll(".open-detalle-modal").forEach(btn => {
+				btn.addEventListener("click", () => {
+					const id = btn.getAttribute("data-id");
+					const inmueble = btn.getAttribute("data-inmueble");
+
+					inputId.value = id;
+					titulo.textContent = `Agregar Detalle a ${inmueble}`;
+					textarea.value = ""; // limpiar textarea anterior
+
+					modal.show();
+				});
+			});
+		});
+		document.addEventListener("DOMContentLoaded", function () {
+			const modal = new bootstrap.Modal(document.getElementById('galleryModal'));
+			const modalInner = document.getElementById('modalCarouselInner');
+
+			document.querySelectorAll(".open-gallery").forEach(carrusel => {
+				carrusel.addEventListener("click", () => {
+					const images = JSON.parse(carrusel.dataset.images);
+					modalInner.innerHTML = "";
+
+					images.forEach((src, index) => {
+						const item = document.createElement("div");
+						item.className = `carousel-item ${index === 0 ? "active" : ""
+							}`;
+						item.innerHTML = `<img src="${src.url
+							}" class="d-block w-100" alt="Imagen ampliada">`;
+						modalInner.appendChild(item);
+					});
+
+					modal.show();
+				});
+			});
+		});
+	</script>
 
 	{% endblock %}

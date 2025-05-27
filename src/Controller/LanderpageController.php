@@ -46,9 +46,17 @@ final class LanderpageController extends AbstractController
         $data = [];
 
         foreach ($properties as $prop) {
-            $imagenes = array_map(fn($img) => $img->getUrl(), $prop->getPropertyImages()->toArray());
+
+            $imagenes = array_map(fn($img) => [
+                'id' => $img->getId(),
+                'url' => $img->getUrl()
+            ], $prop->getPropertyImages()->toArray());
+
             if (empty($imagenes)) {
-                $imagenes[] = '/img/Imagen_no_disponible.svg';
+                $imagenes[] = [
+                    'id' => 0,
+                    'url' => '/img/Imagen_no_disponible.svg'
+                ];
             }
             $data[] = [
                 'id' => $prop->getId(),
@@ -59,7 +67,10 @@ final class LanderpageController extends AbstractController
                 'observacion' => $prop->getObservacion(),
                 'ubicacion' => $prop->getUbicacion(),
                 'imagenes' => $imagenes,
-                'detalles' => array_map(fn($det) => $det->getTexto(), $prop->getPropertyDetalles()->toArray()),
+                'detalles' => array_map(fn($det) => [
+                    'id' => $det->getId(),
+                    'texto' => $det->getTexto()
+                ], $prop->getPropertyDetalles()->toArray()),
             ];
         }
 
@@ -101,8 +112,6 @@ final class LanderpageController extends AbstractController
 
         $imagen = new PropertyImage();
         $imagen->setProperty($inmueble);
-
-
         if ($imagenArchivo) {
             $newFilename = uniqid() . '.' . $imagenArchivo->guessExtension();
             try {
@@ -140,5 +149,44 @@ final class LanderpageController extends AbstractController
 
 
         return $this->redirectToRoute('app_buscar_arrendo');
+    }
+
+    //eliminar porpetyDetalle
+    #[Route('/property-detalle/delete/{id}', name: 'app_propertydetalle_delete')]
+    public function deleteDetalle(int $id, PropertyDetalleRepository $detalleRepository): Response
+    {
+        $detalle = $detalleRepository->find($id);
+        if (!$detalle) {
+            throw $this->createNotFoundException("Detalle no encontrado.");
+        }
+
+        $detalleRepository->remove($detalle);
+
+        return $this->redirectToRoute('app_buscar_arrendo'); // Ajusta según tu ruta
+    }
+
+    //eliminar imagen
+    #[Route('/imagen/eliminar/{id}', name: 'app_imagen_eliminar')]
+    public function eliminarImagen(int $id, PropertyImageRepository $imageRepository): Response
+    {
+        //si el id de la imagen es null, no se elimina
+        if ($id === 0) {
+            return $this->redirectToRoute('app_buscar_arrendo'); // Ajusta según tu ruta
+        }
+        $imagen = $imageRepository->find($id);
+        if (!$imagen) {
+            throw $this->createNotFoundException("Imagen no encontrada.");
+        }
+        //eliminar imagen
+        // Eliminar el archivo físico si es necesario
+        $imagePath = $this->getParameter('imagenes_directory') . '/' . basename($imagen->getUrl());
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
+        // Eliminar la entidad de la base de datos
+        $imageRepository->remove($imagen);
+
+
+        return $this->redirectToRoute('app_buscar_arrendo'); // Ajusta según tu ruta
     }
 }

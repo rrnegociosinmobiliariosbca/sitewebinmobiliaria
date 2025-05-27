@@ -87,4 +87,6 @@ final class DashboardController extends AbstractController
 
         return new JsonResponse($data);
     }
+
+
 }
