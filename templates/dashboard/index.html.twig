@@ -1,82 +1,86 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DashboardController!
-{% endblock %}
+{% block title %}agregar inmueble | RR Negocios Inmobiliarios{% endblock %}
+
+
 
 {% block body %}
-<div class="text-center my-4">
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#inmuebleModal">
-    Agregar Inmueble
-  </button>
-</div>
-<div class="modal fade" id="inmuebleModal" tabindex="-1" aria-labelledby="inmuebleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title fw-bold" id="inmuebleModalLabel">Ingresar Inmueble</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-      </div>
-      <div class="modal-body">
-        <form id="inmuebleForm">
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <label for="inmueble" class="form-label">Inmueble</label>
-              <input type="text" class="form-control" id="inmueble" name="inmueble" required>
-            </div>
-            <div class="col-md-6 mb-3">
-              <label for="valor" class="form-label">Valor</label>
-              <input type="text" class="form-control" id="valor" name="valor" required>
-            </div>
-            <div class="col-md-6 mb-3">
-              <label for="direccion" class="form-label">Dirección</label>
-              <input type="text" class="form-control" id="direccion" name="direccion" required>
-            </div>
-            <div class="col-md-6 mb-3">
-              <label for="barrio" class="form-label">Barrio</label>
-              <input type="text" class="form-control" id="barrio" name="barrio" required>
-            </div>
-            <div class="col-md-6 mb-3">
-              <label for="observacion" class="form-label">Observación</label>
-              <input type="text" class="form-control" id="observacion" name="observacion" required>
-            </div>
-            <div class="col-md-6 mb-3">
-              <label for="ubicacion" class="form-label">Ubicación (Google Maps)</label>
-              <input type="url" class="form-control" id="ubicacion" name="ubicacion" required>
-            </div>
-            <div class="col-md-6 mb-3">
-              <label for="tipo_inmueble" class="form-label">Tipo de Inmueble</label>
-              <input type="text" class="form-control" id="tipo_inmueble" name="tipo_inmueble" required>
-            </div>
-            <div class="col-md-6 mb-3">
-              <label for="codigo_inmueble" class="form-label">Código del Inmueble</label>
-              <input type="text" class="form-control" id="codigo_inmueble" name="codigo_inmueble" required>
-            </div>
-          </div>
-          <button type="submit" class="btn btn-primary w-100">Guardar</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="container my-4 d-flex justify-content-center">
-  <div class="table-responsive" style="max-width: 1100px; width: 100%;">
-    <table data-toggle="table" data-url="{{ path('app_dashboard_endpoint_list_inmueble') }}" data-pagination="true" class="table table-bordered table-hover table-striped table-sm w-100">
-      <thead>
-        <tr>
-          <th data-field="id" data-sortable="true">ID</th>
-          <th data-field="inmueble" data-sortable="true">Inmueble</th>
-          <th data-field="valor" data-sortable="true">Valor</th>
-          <th data-field="direccion">Dirección</th>
-          <th data-field="barrio">Barrio</th>
-          <th data-field="observacion">Observación</th>
-          <th data-field="ubicacion" data-formatter="linkFormatter">Ubicación</th>
-          <th data-field="tipo_inmueble">Tipo</th>
-          <th data-field="codigo_inmueble">Código</th>
-        </tr>
-      </thead>
-    </table>
-  </div>
-</div>
+	<div class="text-center my-4">
+		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#inmuebleModal">
+			Agregar Inmueble
+		</button>
+	</div>
+	<div class="modal fade" id="inmuebleModal" tabindex="-1" aria-labelledby="inmuebleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title fw-bold" id="inmuebleModalLabel">Ingresar Inmueble</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+				</div>
+				<div class="modal-body">
+					<form id="inmuebleForm">
+						<div class="row">
+							<div class="col-md-6 mb-3">
+								<label for="inmueble" class="form-label">Inmueble</label>
+								<input type="text" class="form-control" id="inmueble" name="inmueble" required>
+							</div>
+							<div class="col-md-6 mb-3">
+								<label for="valor" class="form-label">Valor</label>
+								<input type="text" class="form-control" id="valor" name="valor" required>
+							</div>
+							<div class="col-md-6 mb-3">
+								<label for="direccion" class="form-label">Dirección</label>
+								<input type="text" class="form-control" id="direccion" name="direccion" required>
+							</div>
+							<div class="col-md-6 mb-3">
+								<label for="barrio" class="form-label">Barrio</label>
+								<input type="text" class="form-control" id="barrio" name="barrio" required>
+							</div>
+							<div class="col-md-6 mb-3">
+								<label for="observacion" class="form-label">Observación</label>
+								<input type="text" class="form-control" id="observacion" name="observacion" required>
+							</div>
+							<div class="col-md-6 mb-3">
+								<label for="ubicacion" class="form-label">Ubicación (Google Maps)</label>
+								<input type="url" class="form-control" id="ubicacion" name="ubicacion" required>
+							</div>
+							<div class="col-md-6 mb-3">
+								<label for="tipo_inmueble" class="form-label">Tipo de Inmueble</label>
+								<select class="form-select" id="tipo_inmueble" name="tipo_inmueble" required>
+									<option value="ik">ik</option>
+									<option value="tk">tk</option>
+								</select>
+							</div>
+							<div class="col-md-6 mb-3">
+								<label for="codigo_inmueble" class="form-label">Código del Inmueble</label>
+								<input type="text" class="form-control" id="codigo_inmueble" name="codigo_inmueble" required>
+							</div>
+						</div>
+						<button type="submit" class="btn btn-primary w-100">Guardar</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container my-4 d-flex justify-content-center">
+		<div class="table-responsive" style="max-width: 1100px; width: 100%;">
+			<table data-toggle="table" data-url="{{ path('app_dashboard_endpoint_list_inmueble') }}" data-pagination="true" class="table table-bordered table-hover table-striped table-sm w-100">
+				<thead>
+					<tr>
+						<th data-field="id" data-sortable="true">ID</th>
+						<th data-field="inmueble" data-sortable="true">Inmueble</th>
+						<th data-field="valor" data-sortable="true">Valor</th>
+						<th data-field="direccion">Dirección</th>
+						<th data-field="barrio">Barrio</th>
+						<th data-field="observacion">Observación</th>
+						<th data-field="ubicacion" data-formatter="linkFormatter">Ubicación</th>
+						<th data-field="tipo_inmueble">Tipo</th>
+						<th data-field="codigo_inmueble">Código</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+	</div>
 
 
 	<script>
