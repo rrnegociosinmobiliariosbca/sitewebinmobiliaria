@@ -21,6 +21,10 @@ final class LanderpageController extends AbstractController
     #[Route('/', name: 'app_')]
     public function index(): Response
     {
+        //si esta logueado, redirigir a dashboard
+        if ($this->getUser()) {
+            return $this->redirectToRoute('app_dashboard');
+        }
         return $this->redirectToRoute('app_inmobiliaria');
     }
     #[Route('/inmobiliaria', name: 'app_inmobiliaria')]
