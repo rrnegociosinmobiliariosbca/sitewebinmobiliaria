@@ -27,11 +27,11 @@ class SecurityController extends AbstractController
         ]);
     }
 
- #[Route(path: '/register', name: 'app_login')]
+    #[Route(path: '/register', name: 'app_register')]
     public function register(UserRepository $userRepository): JsonResponse
     {
-       // crear dos variable uana para el usuario y otra para la contraseña
-        $user = 'admin';  
+        // crear dos variable uana para el usuario y otra para la contraseña
+        $user = 'admin';
         $password = 'admin';
 
         // Verificar si el usuario ya existe
@@ -42,7 +42,7 @@ class SecurityController extends AbstractController
         }
 
 
-      //hashear la contraseña antes de guardarla
+        //hashear la contraseña antes de guardarla
 
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
         // crear un nuevo usuario
@@ -51,8 +51,8 @@ class SecurityController extends AbstractController
         $newUser->setPassword($hashedPassword);
         $newUser->setRoles(['ROLE_ADMIN']); // Asignar el rol de administrador
         // guardar el usuario en la base de datos
-        $userRepository->save($newUser, true);      
-         
+        $userRepository->save($newUser, true);
+
         // retornar un JsonResponse con el usuario y la contraseña
 
         return new JsonResponse([
