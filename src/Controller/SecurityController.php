@@ -81,4 +81,11 @@ class SecurityController extends AbstractController
 
         return new BinaryFileResponse($filePath);
     }
+
+    #redirecionar una ruta que ya no existe a la ruta de login
+    #[Route('/home/inicio', name: 'old_inicio')]
+    public function oldLoginRedirect(): Response
+    {
+      return $this->redirectToRoute('app_inmobiliaria');
+    }
 }

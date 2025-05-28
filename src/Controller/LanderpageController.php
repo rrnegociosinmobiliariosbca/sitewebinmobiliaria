@@ -23,11 +23,7 @@ final class LanderpageController extends AbstractController
     {
         return $this->redirectToRoute('app_inmobiliaria');
     }
-    #[Route('/home', name: 'app_home')]
-    public function home(): Response
-    {
-        return $this->redirectToRoute('app_inmobiliaria');
-    }
+
     #[Route('/inmobiliaria', name: 'app_inmobiliaria')]
     public function landerpage(): Response
     {
