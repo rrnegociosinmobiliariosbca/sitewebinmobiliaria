@@ -1,10 +1,9 @@
 {% extends '/landerpage/index.html.twig' %}
 
-{% block title %}RR NEGOCIOS INMOBILIARIOS
+{% block title %}RR ARRIENDOS INMOBILIARIOS
 {% endblock %}
 
 {% block contenidolander %}
-
 <!-- Contenido principal -->
 <div class="content-wrapper row">
 
@@ -12,46 +11,45 @@
 	<section class="gallery-section col-sm-12 col-md-6 col-lg-4 mb-4">
 		<div class="card shadow-lg">
 			<!-- Carrusel -->
-<div id="carouselExample{{ loop.index }}" class="carousel slide" >
+			<div id="carouselExample{{ loop.index }}" class="carousel slide">
 
-    <div class="carousel-inner ratio ratio-16x9">
-        {% for img in card.imagenes %}
-            <div class="carousel-item {% if loop.first %}active{% endif %}">
-                <div class="position-relative w-100 h-100">
-                    {% if app.user and img.id != 0%}
-                        <a href="{{ path('app_imagen_eliminar', {"id": img.id}) }}"
-                           class="btn btn-danger btn-sm position-absolute top-0 end-0 m-2 z-3"
-                           onclick="return confirm('¿Estás seguro de eliminar esta imagen?');"
-                           title="Eliminar imagen">
-                            <i class="bi bi-trash-fill"></i>
-                        </a>
-                    {% endif %}
-                    <img src="{{ img.url }}" class="d-block w-100 h-100 object-fit-cover" alt="Imagen">
-                </div>
-            </div>
-        {% endfor %}
-    </div>
+				<div class="carousel-inner ratio ratio-16x9">
+					{% for img in card.imagenes %}
+					<div class="carousel-item {% if loop.first %}active{% endif %}">
+						<div class="position-relative w-100 h-100">
+							{% if app.user and img.id != 0%}
+							<a href="{{ path('app_imagen_eliminar', {" id": img.id}) }}"
+								class="btn btn-danger btn-sm position-absolute top-0 end-0 m-2 z-3"
+								onclick="return confirm('¿Estás seguro de eliminar esta imagen?');"
+								title="Eliminar imagen">
+								<i class="bi bi-trash-fill"></i>
+							</a>
+							{% endif %}
+							<img src="{{ img.url }}" class="d-block w-100 h-100 object-fit-cover" alt="Imagen">
+						</div>
+					</div>
+					{% endfor %}
+				</div>
 
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample{{ loop.index }}"
-            data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Anterior</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample{{ loop.index }}"
-            data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Siguiente</span>
-    </button>
-</div>
+				<button class="carousel-control-prev" type="button" data-bs-target="#carouselExample{{ loop.index }}"
+					data-bs-slide="prev">
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Anterior</span>
+				</button>
+				<button class="carousel-control-next" type="button" data-bs-target="#carouselExample{{ loop.index }}"
+					data-bs-slide="next">
+					<span class="carousel-control-next-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Siguiente</span>
+				</button>
+			</div>
 
 			<!-- Información -->
 			<div class="card-body">
 				<ul class="list-group">
-				
+
 					<li class="list-group-item">
-						<button type="button" class="btn btn-outline-dark btn-sm open-gallery"
-							data-bs-toggle="modal" data-bs-target="#galleryModal"
-							data-images="{{ card.imagenes|json_encode }}">
+						<button type="button" class="btn btn-outline-dark btn-sm open-gallery" data-bs-toggle="modal"
+							data-bs-target="#galleryModal" data-images="{{ card.imagenes|json_encode }}">
 							<i class="fa-solid fa-image"></i> Ver Galería
 						</button>
 					<li class="list-group-item">INMUEBLE:
@@ -102,7 +100,7 @@
 												<i class="bi bi-bookmark-star-fill"></i>
 												{{ item.texto }}
 												{% if app.user %}
-												<a href='{{ path('app_propertydetalle_delete', {"id": item.id}) }}'
+												<a href='{{ path(' app_propertydetalle_delete', {"id": item.id}) }}'
 													class="btn btn-danger btn-sm float-end ms-2"
 													onclick="return confirm('¿Estás seguro de eliminar este detalle?');">
 													<i class="bi bi-trash-fill"></i>
@@ -288,4 +286,5 @@
 		});
 	</script>
 
-	{% endblock %}
+
+{% endblock %}

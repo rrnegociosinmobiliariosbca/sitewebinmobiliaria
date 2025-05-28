@@ -54,6 +54,9 @@ final class DashboardController extends AbstractController
         $property->setUbicacion($data['ubicacion']);
         $property->setTipoInmueble($data['tipo_inmueble']);
         $property->setCodigoInmueble($data['codigo_inmueble']);
+        //tipo de contrato
+        $property->setTipoContrato($data['tipo_contrato']);
+
 
         //guardar el objeto en la base de datos
         $propertyRepository->save($property);
@@ -72,6 +75,8 @@ final class DashboardController extends AbstractController
                 'ubicacion' => $property->getUbicacion(),
                 'tipo_inmueble' => $property->getTipoInmueble(),
                 'codigo_inmueble' => $property->getCodigoInmueble(),
+                'tipo_contrato' => $property->getTipoContrato(),
+
             ],
         ];
         return $this->json($response);
@@ -95,6 +100,7 @@ final class DashboardController extends AbstractController
                 'ubicacion' => $property->getUbicacion(),
                 'tipo_inmueble' => $property->getTipoInmueble(),
                 'codigo_inmueble' => $property->getCodigoInmueble(),
+                'tipo_contrato' => $property->getTipoContrato(),
             ];
         }
 

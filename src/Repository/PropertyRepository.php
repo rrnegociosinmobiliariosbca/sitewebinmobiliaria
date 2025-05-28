@@ -33,4 +33,15 @@ class PropertyRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+    //buscar por tipo de contrato
+    public function findByTipoContrato(string $tipoContrato): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.tipo_contrato = :tipoContrato')
+            ->setParameter('tipoContrato', $tipoContrato)
+            ->orderBy('p.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }

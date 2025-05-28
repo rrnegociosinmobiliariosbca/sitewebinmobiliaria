@@ -53,6 +53,13 @@
 							</select>
 						</div>
 						<div class="col-md-6 mb-3">
+							<label for="tipo_contrato" class="form-label">Tipo de Contrato</label>
+							<select class="form-select" id="tipo_contrato" name="tipo_contrato" required>							
+								<option value="arriendo">arriendo</option>
+								<option value="venta">venta</option>
+							</select>
+						</div>
+						<div class="col-md-6 mb-3">
 							<label for="codigo_inmueble" class="form-label">Código del Inmueble</label>
 							<input type="text" class="form-control" id="codigo_inmueble" name="codigo_inmueble"
 								required>
@@ -79,6 +86,7 @@
 					<th data-field="ubicacion" data-formatter="linkFormatter">Ubicación</th>
 					<th data-field="tipo_inmueble">Tipo</th>
 					<th data-field="codigo_inmueble">Código</th>
+					<th data-field="tipo_contrato">Contrato</th>
 					<th data-field="actions" data-formatter="actionFormatter" data-align="center">Acciones</th>
 				</tr>
 			</thead>
@@ -113,6 +121,7 @@
 		document.getElementById('ubicacion').value = row.ubicacion;
 		document.getElementById('tipo_inmueble').value = row.tipo_inmueble;
 		document.getElementById('codigo_inmueble').value = row.codigo_inmueble;
+		document.getElementById('tipo_contrato').value = row.tipo_contrato;
 		inmuebleModal.show();
 		console.log(row);
 		// Mostrar el modal
@@ -149,9 +158,10 @@
 		const ubicacion = document.getElementById('ubicacion').value;
 		const tipo_inmueble = document.getElementById('tipo_inmueble').value;
 		const codigo_inmueble = document.getElementById('codigo_inmueble').value;
+		const tipo_contrato = document.getElementById('tipo_contrato').value;
 
 
-		if (!inmueble || !valor || !direccion || !barrio || !observacion || !ubicacion || !tipo_inmueble || !codigo_inmueble) {
+		if (!inmueble || !valor || !direccion || !barrio || !observacion || !ubicacion || !tipo_inmueble || !codigo_inmueble || !tipo_contrato) {
 			alert('Por favor, completa todos los campos.');
 			return;
 		}
@@ -170,7 +180,8 @@
 					observacion,
 					ubicacion,
 					tipo_inmueble,
-					codigo_inmueble
+					codigo_inmueble,
+					tipo_contrato
 				}
 			)
 		}).then(response => {

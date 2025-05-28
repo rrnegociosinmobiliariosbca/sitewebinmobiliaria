@@ -28,6 +28,9 @@ class Property
     private ?string $barrio = null;
 
     #[ORM\Column(length: 255)]
+    private ?string $tipo_contrato = null;
+
+    #[ORM\Column(length: 255)]
     private ?string $observacion = null;
 
     #[ORM\Column(length: 255)]
@@ -214,6 +217,17 @@ class Property
     public function setCodigoInmueble(string $codigo_inmueble): static
     {
         $this->codigo_inmueble = $codigo_inmueble;
+
+        return $this;
+    }
+
+    public function getTipoContrato(): ?string
+    {
+        return $this->tipo_contrato;
+    }
+    public function setTipoContrato(?string $tipo_contrato): static
+    {
+        $this->tipo_contrato = $tipo_contrato;
 
         return $this;
     }

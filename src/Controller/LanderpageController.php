@@ -35,14 +35,9 @@ final class LanderpageController extends AbstractController
         return $this->render('landerpage/buscar.html.twig');
     }
     #[Route('/buscar/ventas', name: 'app_buscar_ventas')]
-    public function ventas(): Response
+    public function ventas(PropertyRepository $propertyRepository): Response
     {
-        return $this->render('landerpage/ventas.html.twig');
-    }
-    #[Route('/buscar/arrendo', name: 'app_buscar_arrendo')]
-    public function arrendo(PropertyRepository $propertyRepository): Response
-    {
-        $properties = $propertyRepository->findAll();
+        $properties = $propertyRepository->findByTipoContrato('venta');
 
         $data = [];
 
@@ -74,6 +69,44 @@ final class LanderpageController extends AbstractController
                 ], $prop->getPropertyDetalles()->toArray()),
             ];
         }
+        return $this->render('landerpage/ventas.html.twig', ['cards' => $data]);
+    }
+    #[Route('/buscar/arrendo', name: 'app_buscar_arrendo')]
+    public function arrendo(PropertyRepository $propertyRepository): Response
+    {
+         $properties = $propertyRepository->findByTipoContrato('arriendo');
+
+        $data = [];
+
+        foreach ($properties as $prop) {
+
+            $imagenes = array_map(fn($img) => [
+                'id' => $img->getId(),
+                'url' => $img->getUrl()
+            ], $prop->getPropertyImages()->toArray());
+
+            if (empty($imagenes)) {
+                $imagenes[] = [
+                    'id' => 0,
+                    'url' => '/img/Imagen_no_disponible.svg'
+                ];
+            }
+            $data[] = [
+                'id' => $prop->getId(),
+                'inmueble' => $prop->getInmueble(),
+                'valor' => $prop->getValor(),
+                'direccion' => $prop->getDireccion(),
+                'barrio' => $prop->getBarrio(),
+                'observacion' => $prop->getObservacion(),
+                'ubicacion' => $prop->getUbicacion(),
+                'imagenes' => $imagenes,
+                'detalles' => array_map(fn($det) => [
+                    'id' => $det->getId(),
+                    'texto' => $det->getTexto()
+                ], $prop->getPropertyDetalles()->toArray()),
+            ];
+        }
+
 
 
         return $this->render('landerpage/arrendo.html.twig', ['cards' => $data]);
