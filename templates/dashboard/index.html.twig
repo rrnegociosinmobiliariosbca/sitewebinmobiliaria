@@ -1,142 +1,194 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}agregar inmueble | RR Negocios Inmobiliarios{% endblock %}
-
+{% block title %}agregar inmueble | RR Negocios Inmobiliarios
+{% endblock %}
 
 
 {% block body %}
-	<div class="text-center my-4">
-		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#inmuebleModal">
-			Agregar Inmueble
-		</button>
-	</div>
-	<div class="modal fade" id="inmuebleModal" tabindex="-1" aria-labelledby="inmuebleModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title fw-bold" id="inmuebleModalLabel">Ingresar Inmueble</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-				</div>
-				<div class="modal-body">
-					<form id="inmuebleForm">
-						<div class="row">
-							<div class="col-md-6 mb-3">
-								<label for="inmueble" class="form-label">Inmueble</label>
-								<input type="text" class="form-control" id="inmueble" name="inmueble" required>
-							</div>
-							<div class="col-md-6 mb-3">
-								<label for="valor" class="form-label">Valor</label>
-								<input type="text" class="form-control" id="valor" name="valor" required>
-							</div>
-							<div class="col-md-6 mb-3">
-								<label for="direccion" class="form-label">Dirección</label>
-								<input type="text" class="form-control" id="direccion" name="direccion" required>
-							</div>
-							<div class="col-md-6 mb-3">
-								<label for="barrio" class="form-label">Barrio</label>
-								<input type="text" class="form-control" id="barrio" name="barrio" required>
-							</div>
-							<div class="col-md-6 mb-3">
-								<label for="observacion" class="form-label">Observación</label>
-								<input type="text" class="form-control" id="observacion" name="observacion" required>
-							</div>
-							<div class="col-md-6 mb-3">
-								<label for="ubicacion" class="form-label">Ubicación (Google Maps)</label>
-								<input type="url" class="form-control" id="ubicacion" name="ubicacion" required>
-							</div>
-							<div class="col-md-6 mb-3">
-								<label for="tipo_inmueble" class="form-label">Tipo de Inmueble</label>
-								<select class="form-select" id="tipo_inmueble" name="tipo_inmueble" required>
-									<option value="ik">ik</option>
-									<option value="tk">tk</option>
-								</select>
-							</div>
-							<div class="col-md-6 mb-3">
-								<label for="codigo_inmueble" class="form-label">Código del Inmueble</label>
-								<input type="text" class="form-control" id="codigo_inmueble" name="codigo_inmueble" required>
-							</div>
+<div class="text-center my-4">
+	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#inmuebleModal">
+		Agregar Inmueble
+	</button>
+</div>
+<div class="modal fade" id="inmuebleModal" tabindex="-1" aria-labelledby="inmuebleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title fw-bold" id="inmuebleModalLabel">Ingresar Inmueble</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+			</div>
+			<div class="modal-body">
+				<form id="inmuebleForm">
+					<div class="row">
+							<input type="hidden" class="form-control" id="id" name="id" value="0" readonly>
+						<div class="col-md-6 mb-3">
+							<label for="inmueble" class="form-label">Inmueble</label>
+							<input type="text" class="form-control" id="inmueble" name="inmueble" required>
 						</div>
-						<button type="submit" class="btn btn-primary w-100">Guardar</button>
-					</form>
-				</div>
+						<div class="col-md-6 mb-3">
+							<label for="valor" class="form-label">Valor</label>
+							<input type="text" class="form-control" id="valor" name="valor" required>
+						</div>
+						<div class="col-md-6 mb-3">
+							<label for="direccion" class="form-label">Dirección</label>
+							<input type="text" class="form-control" id="direccion" name="direccion" required>
+						</div>
+						<div class="col-md-6 mb-3">
+							<label for="barrio" class="form-label">Barrio</label>
+							<input type="text" class="form-control" id="barrio" name="barrio" required>
+						</div>
+						<div class="col-md-6 mb-3">
+							<label for="observacion" class="form-label">Observación</label>
+							<input type="text" class="form-control" id="observacion" name="observacion" required>
+						</div>
+						<div class="col-md-6 mb-3">
+							<label for="ubicacion" class="form-label">Ubicación (Google Maps)</label>
+							<input type="url" class="form-control" id="ubicacion" name="ubicacion" required>
+						</div>
+						<div class="col-md-6 mb-3">
+							<label for="tipo_inmueble" class="form-label">Tipo de Inmueble</label>
+							<select class="form-select" id="tipo_inmueble" name="tipo_inmueble" required>
+								<option value="ik">ik</option>
+								<option value="tk">tk</option>
+							</select>
+						</div>
+						<div class="col-md-6 mb-3">
+							<label for="codigo_inmueble" class="form-label">Código del Inmueble</label>
+							<input type="text" class="form-control" id="codigo_inmueble" name="codigo_inmueble"
+								required>
+						</div>
+					</div>
+					<button type="submit" class="btn btn-primary w-100">Guardar</button>
+				</form>
 			</div>
 		</div>
 	</div>
-	<div class="container my-4 d-flex justify-content-center">
-		<div class="table-responsive" style="max-width: 1100px; width: 100%;">
-			<table data-toggle="table" data-url="{{ path('app_dashboard_endpoint_list_inmueble') }}" data-pagination="true" class="table table-bordered table-hover table-striped table-sm w-100">
-				<thead>
-					<tr>
-						<th data-field="id" data-sortable="true">ID</th>
-						<th data-field="inmueble" data-sortable="true">Inmueble</th>
-						<th data-field="valor" data-sortable="true">Valor</th>
-						<th data-field="direccion">Dirección</th>
-						<th data-field="barrio">Barrio</th>
-						<th data-field="observacion">Observación</th>
-						<th data-field="ubicacion" data-formatter="linkFormatter">Ubicación</th>
-						<th data-field="tipo_inmueble">Tipo</th>
-						<th data-field="codigo_inmueble">Código</th>
-					</tr>
-				</thead>
-			</table>
-		</div>
+</div>
+<div class="container my-4 d-flex justify-content-center">
+	<div class="table-responsive" style="max-width: 1100px; width: 100%;">
+		<table data-toggle="table" data-url="{{ path('app_dashboard_endpoint_list_inmueble') }}" data-pagination="true"
+			class="table table-bordered table-hover table-striped table-sm w-100">
+			<thead>
+				<tr>
+					<th data-field="id" data-sortable="true">ID</th>
+					<th data-field="inmueble" data-sortable="true">Inmueble</th>
+					<th data-field="valor" data-sortable="true">Valor</th>
+					<th data-field="direccion">Dirección</th>
+					<th data-field="barrio">Barrio</th>
+					<th data-field="observacion">Observación</th>
+					<th data-field="ubicacion" data-formatter="linkFormatter">Ubicación</th>
+					<th data-field="tipo_inmueble">Tipo</th>
+					<th data-field="codigo_inmueble">Código</th>
+					<th data-field="actions" data-formatter="actionFormatter" data-align="center">Acciones</th>
+				</tr>
+			</thead>
+		</table>
+
 	</div>
+</div>
 
 
-	<script>
-		function linkFormatter(value, row, index) {
-return `<a href="${value}" target="_blank">Ver Mapa</a>`;
-}
-document.getElementById('inmuebleForm').addEventListener('submit', function (event) {
-event.preventDefault();
-// Evitar el envío del formulario por defecto
+<script>
+	function actionFormatter(value, row, index) {
+		return `
+        <abutton onclick='editarInmueble(${JSON.stringify(row)})' class="btn btn-sm btn-primary me-1">
+            <i class="bi bi-pencil"></i>
+        </abutton>
+        <button class="btn btn-sm btn-danger" onclick="eliminarInmueble(${row.id})">
+            <i class="bi bi-trash"></i>
+        </button>
+    `;
+	}
 
-// Obtener los valores de los campos
-const inmueble = document.getElementById('inmueble').value;
-const valor = document.getElementById('valor').value;
-const direccion = document.getElementById('direccion').value;
-const barrio = document.getElementById('barrio').value;
-const observacion = document.getElementById('observacion').value;
-const ubicacion = document.getElementById('ubicacion').value;
-const tipo_inmueble = document.getElementById('tipo_inmueble').value;
-const codigo_inmueble = document.getElementById('codigo_inmueble').value;
+	// Función para editar un inmueble
+	function editarInmueble(row) {
+		const inmuebleModal = new bootstrap.Modal(document.getElementById('inmuebleModal'));
+		//id formulario
+		document.getElementById('id').value = row.id;
+		document.getElementById('inmueble').value = row.inmueble;
+		document.getElementById('valor').value = row.valor;
+		document.getElementById('direccion').value = row.direccion;
+		document.getElementById('barrio').value = row.barrio;
+		document.getElementById('observacion').value = row.observacion;
+		document.getElementById('ubicacion').value = row.ubicacion;
+		document.getElementById('tipo_inmueble').value = row.tipo_inmueble;
+		document.getElementById('codigo_inmueble').value = row.codigo_inmueble;
+		inmuebleModal.show();
+		console.log(row);
+		// Mostrar el modal
+		
+	}
+	function eliminarInmueble(id) {
+		if (confirm("¿Estás seguro de que deseas eliminar este inmueble?")) {
+			fetch(`/dashboard/endpoint/eliminar_inmueble/${id}`, { method: 'GET' }).then(response => {
+				if (response.ok) {
+					$('.table').bootstrapTable('refresh');
+				} else {
+					alert('Error al eliminar el inmueble');
+				}
+			}).catch(error => {
+				console.error('Error:', error);
+			});
+		}
+	}
+
+	function linkFormatter(value, row, index) {
+		return `<a href="${value}" target="_blank">Ubicación <i class="fa-solid fa-location-dot text-danger"></i></a>`;
+	}
+	const form = document.getElementById('inmuebleForm').addEventListener('submit', function (event) {
+		event.preventDefault();
+		// Evitar el envío del formulario por defecto
+
+		// Obtener los valores de los campos
+		const id = document.getElementById('id').value;
+		const inmueble = document.getElementById('inmueble').value;
+		const valor = document.getElementById('valor').value;
+		const direccion = document.getElementById('direccion').value;
+		const barrio = document.getElementById('barrio').value;
+		const observacion = document.getElementById('observacion').value;
+		const ubicacion = document.getElementById('ubicacion').value;
+		const tipo_inmueble = document.getElementById('tipo_inmueble').value;
+		const codigo_inmueble = document.getElementById('codigo_inmueble').value;
 
 
-if (! inmueble || ! valor || ! direccion || ! barrio || ! observacion || ! ubicacion || ! tipo_inmueble || ! codigo_inmueble) {
-alert('Por favor, completa todos los campos.');
-return;
-}
-fetch('{{ path("app_dashboard_endpoint_registrar_inmueble") }}', {
-method: 'POST',
-headers: {
-'Content-Type': 'application/json'
-},
-body: JSON.stringify(
-{
-inmueble,
-valor,
-direccion,
-barrio,
-observacion,
-ubicacion,
-tipo_inmueble,
-codigo_inmueble
-}
-)
-}).then(response => {
-if (!response.ok) {
-throw new Error('Error al enviar los datos');
-}
-return response.json();
-}).then(data => {
-console.log('Datos enviados con éxito:', data);
-alert('Inmueble guardado exitosamente');
-}).catch(error => {
-console.error('Error:', error);
-// alert('Hubo un problema al guardar el inmueble');
-});
+		if (!inmueble || !valor || !direccion || !barrio || !observacion || !ubicacion || !tipo_inmueble || !codigo_inmueble) {
+			alert('Por favor, completa todos los campos.');
+			return;
+		}
+		fetch('{{ path("app_dashboard_endpoint_registrar_inmueble") }}', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(
+				{
+					id,
+					inmueble,
+					valor,
+					direccion,
+					barrio,
+					observacion,
+					ubicacion,
+					tipo_inmueble,
+					codigo_inmueble
+				}
+			)
+		}).then(response => {
+			if (!response.ok) {
+				throw new Error('Error al enviar los datos');
+			}
+			return response.json();
+		}).then(data => {
+			console.log('Datos enviados con éxito:', data);
+			// recargar pagina
+			location.reload();
+
+		}).catch(error => {
+			console.error('Error:', error);
+			// alert('Hubo un problema al guardar el inmueble');
+		});
 
 
-});
-	</script>
+	});
+</script>
 {% endblock %}
