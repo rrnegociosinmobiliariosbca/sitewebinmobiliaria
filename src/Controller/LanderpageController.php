@@ -74,7 +74,7 @@ final class LanderpageController extends AbstractController
     #[Route('/buscar/arrendo', name: 'app_buscar_arrendo')]
     public function arrendo(PropertyRepository $propertyRepository): Response
     {
-         $properties = $propertyRepository->findByTipoContrato('arriendo');
+        $properties = $propertyRepository->findByTipoContrato('arriendo');
 
         $data = [];
 
@@ -128,7 +128,10 @@ final class LanderpageController extends AbstractController
         $detalleRepository->save($detalle);
 
 
-        return $this->redirectToRoute('app_buscar_arrendo'); // Ajusta según tu ruta
+        if ($request->headers->get('referer') && str_contains($request->headers->get('referer'), 'arrendo')) {
+            return $this->redirectToRoute('app_buscar_arrendo'); // Ajusta según tu ruta
+        }
+        return $this->redirectToRoute('app_buscar_ventas'); // Ajusta según tu ruta
     }
 
     #[Route('/imagen/agregar', name: 'agregar_imagen', methods: ['POST'])]
@@ -181,13 +184,15 @@ final class LanderpageController extends AbstractController
         }
 
 
-
-        return $this->redirectToRoute('app_buscar_arrendo');
+        if ($request->headers->get('referer') && str_contains($request->headers->get('referer'), 'arrendo')) {
+            return $this->redirectToRoute('app_buscar_arrendo'); // Ajusta según tu ruta
+        }
+        return $this->redirectToRoute('app_buscar_ventas'); // Ajusta según tu ruta
     }
 
     //eliminar porpetyDetalle
     #[Route('/property-detalle/delete/{id}', name: 'app_propertydetalle_delete')]
-    public function deleteDetalle(int $id, PropertyDetalleRepository $detalleRepository): Response
+    public function deleteDetalle(int $id,Request $request, PropertyDetalleRepository $detalleRepository): Response
     {
         $detalle = $detalleRepository->find($id);
         if (!$detalle) {
@@ -196,12 +201,15 @@ final class LanderpageController extends AbstractController
 
         $detalleRepository->remove($detalle);
 
-        return $this->redirectToRoute('app_buscar_arrendo'); // Ajusta según tu ruta
+        if ($request->headers->get('referer') && str_contains($request->headers->get('referer'), 'arrendo')) {
+            return $this->redirectToRoute('app_buscar_arrendo'); // Ajusta según tu ruta
+        }
+        return $this->redirectToRoute('app_buscar_ventas'); // Ajusta según tu ruta
     }
 
     //eliminar imagen
     #[Route('/imagen/eliminar/{id}', name: 'app_imagen_eliminar')]
-    public function eliminarImagen(int $id, PropertyImageRepository $imageRepository): Response
+    public function eliminarImagen(int $id,Request $request, PropertyImageRepository $imageRepository): Response
     {
         //si el id de la imagen es null, no se elimina
         if ($id === 0) {
@@ -221,6 +229,9 @@ final class LanderpageController extends AbstractController
         $imageRepository->remove($imagen);
 
 
-        return $this->redirectToRoute('app_buscar_arrendo'); // Ajusta según tu ruta
+        if ($request->headers->get('referer') && str_contains($request->headers->get('referer'), 'arrendo')) {
+            return $this->redirectToRoute('app_buscar_arrendo'); // Ajusta según tu ruta
+        }
+        return $this->redirectToRoute('app_buscar_ventas'); // Ajusta según tu ruta
     }
 }
