@@ -18,7 +18,7 @@
 					<div class="carousel-item {% if loop.first %}active{% endif %}">
 						<div class="position-relative w-100 h-100">
 							{% if app.user and img.id != 0%}
-							<a href="{{ path('app_imagen_eliminar', {" id": img.id}) }}"
+							<a href="{{ path('app_imagen_eliminar', {"id": img.id}) }}"
 								class="btn btn-danger btn-sm position-absolute top-0 end-0 m-2 z-3"
 								onclick="return confirm('¿Estás seguro de eliminar esta imagen?');"
 								title="Eliminar imagen">
