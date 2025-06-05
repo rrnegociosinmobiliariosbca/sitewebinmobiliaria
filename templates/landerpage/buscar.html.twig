@@ -44,13 +44,13 @@
 
 		}
 		.contorno-real {
-	
+
 			-webkit-text-stroke: 0.5px white;
 		}
 		a {
 			text-decoration: none; /* Sin subrayado */
-			
-			color: rgba(61, 63, 150, 1);/* Color del texto */
+
+			color: rgba(61, 63, 150, 1); /* Color del texto */
 		}
 		.font-confortan:hover {
 			transform: scale(1.05); /* Efecto de zoom al pasar el mouse */
@@ -68,29 +68,34 @@
 					¡una vivienda a tu alcance!
 				</p>
 			</div>
-			<section class="gallery-section-fix col-sm-5">
-				<div class="font-confortan contorno-real">
-					<a href="{{ path("app_buscar_arrendo") }}" class=" text-decoration-none fw-bold">
-						Arriendos
-					</a>
-				</div>
-			</section>
-			<section class="gallery-section-fix col-sm-5">
-				<div class="font-confortan  contorno-real">
-					<a href="{{ path("app_buscar_ventas") }}" class=" text-decoration-none fw-bold">
-						Ventas
-					</a>
-				</div>
-			</section>
-
-			{% if app.user %}
+			<div class="contorno-real row fw-bold">
+				<section class="gallery-section-fix col-sm-5">
+					<div class="font-confortan ">
+						<a href="{{ path("app_buscar_arrendo") }}">
+							Arriendos
+						</a>
+					</div>
+				</section>
 				<section class="gallery-section-fix col-sm-5">
 					<div class="font-confortan">
-						<a href="{{ path("app_dashboard") }}" class=" text-decoration-none fw-bold">
+						<a href="{{ path("app_buscar_ventas") }}">
+							Ventas
+						</a>
+					</div>
+				</section>
+
+						{% if app.user %}
+				<section class="gallery-section-fix col-sm-5">
+					<div class="font-confortan">
+						<a href="{{ path("app_dashboard") }}">
 							agregar inmueble
 						</a>
 					</div>
 				</section>
 			{% endif %}
+			</div>
+
+
+	
 		</div>
 	{% endblock %}
