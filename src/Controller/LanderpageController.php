@@ -184,7 +184,7 @@ final class LanderpageController extends AbstractController
         }
 
 
-        if ($request->headers->get('referer') && str_contains($request->headers->get('referer'), 'arrendo')) {
+        if ($request->headers->get('referer') && str_contains($request->headers->get('referer'), 'arriendo')) {
             return $this->redirectToRoute('app_buscar_arrendo'); // Ajusta según tu ruta
         }
         return $this->redirectToRoute('app_buscar_ventas'); // Ajusta según tu ruta
@@ -201,7 +201,7 @@ final class LanderpageController extends AbstractController
 
         $detalleRepository->remove($detalle);
 
-        if ($request->headers->get('referer') && str_contains($request->headers->get('referer'), 'arrendo')) {
+        if ($request->headers->get('referer') && str_contains($request->headers->get('referer'), 'arriendo')) {
             return $this->redirectToRoute('app_buscar_arrendo'); // Ajusta según tu ruta
         }
         return $this->redirectToRoute('app_buscar_ventas'); // Ajusta según tu ruta
@@ -229,7 +229,7 @@ final class LanderpageController extends AbstractController
         $imageRepository->remove($imagen);
 
 
-        if ($request->headers->get('referer') && str_contains($request->headers->get('referer'), 'arrendo')) {
+        if ($request->headers->get('referer') && str_contains($request->headers->get('referer'), 'arriendo')) {
             return $this->redirectToRoute('app_buscar_arrendo'); // Ajusta según tu ruta
         }
         return $this->redirectToRoute('app_buscar_ventas'); // Ajusta según tu ruta
