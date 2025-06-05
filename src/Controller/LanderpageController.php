@@ -71,7 +71,7 @@ final class LanderpageController extends AbstractController
         }
         return $this->render('landerpage/ventas.html.twig', ['cards' => $data]);
     }
-    #[Route('/buscar/arrendo', name: 'app_buscar_arrendo')]
+    #[Route('/buscar/arriendo', name: 'app_buscar_arrendo')]
     public function arrendo(PropertyRepository $propertyRepository): Response
     {
         $properties = $propertyRepository->findByTipoContrato('arriendo');

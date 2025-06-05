@@ -64,12 +64,17 @@
 
 	<!-- Navbar -->
 	<nav class="navbar navbar-expand-lg" data-bs-theme="dark">
-		<div class="container-fluid">
-			<a class="navbar-brand" href="{{ path("app_") }}">
+	<div class="container-fluid">
+		<a class="navbar-brand d-flex flex-column align-items-start" href="{{ path("app_") }}">
+			<div class="d-flex align-items-center">
 				<img src="/img/logo.png" alt="Logo" width="48">
-				<span class="ms-2">RR NEGOCIOS INMOBILIARIOS</span>
-			</a>
-		</div>
+				<span class="ms-2 text-uppercase">RR NEGOCIOS INMOBILIARIOS</span>
+			</div>
+			<small class="text-muted" style="font-size: 0.8rem;">
+				{% block subtitle %}{% endblock %}
+			</small>
+		</a>
+	</div>
 	</nav>
 	{% block contenidolander %}
 		<!-- Contenido principal -->
