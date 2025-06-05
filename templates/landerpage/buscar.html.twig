@@ -84,18 +84,17 @@
 					</div>
 				</section>
 
-						{% if app.user %}
-				<section class="gallery-section-fix col-sm-5">
-					<div class="font-confortan">
-						<a href="{{ path("app_dashboard") }}">
-							agregar inmueble
-						</a>
-					</div>
-				</section>
-			{% endif %}
+				{% if app.user %}
+					<section class="gallery-section-fix col-sm-12">
+						<div class="font-confortan">
+							<a href="{{ path("app_dashboard") }}">
+								agregar inmueble
+							</a>
+						</div>
+					</section>
+				{% endif %}
 			</div>
 
 
-	
 		</div>
 	{% endblock %}
