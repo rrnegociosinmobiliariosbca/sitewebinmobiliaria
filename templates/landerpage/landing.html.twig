@@ -26,44 +26,23 @@
 			justify-content: center;
 			align-items: center;
 			height: 100vh; /* Ocupa toda la altura de la ventana */
-			text-align: center; /* Centrar el texto */
-			font-family: 'Arial', sans-serif; /* Fuente del texto */			
-			font-size: 1.2rem; /* Tamaño de fuente */
-			padding: 20px; /* Espacio alrededor del contenido */
-		
-				}
 
-	
-
-		.gallery-section {
-			padding: 60px 20px;
-			background-color: rgba(27, 15, 15,0); /* fondo semi-transparente */
-			border-radius: 10px;
-		
 		}
 	</style>
 
 	<!-- Contenido principal -->
 	<div class="content-wrapper">
-			<section class="gallery-section">
-				<div class="container text-center">
-					<img src="/img/logo.png" alt="Imagen única" class="img-fluid w-75 mb-4">
-					<h6 class=" mb-4 mt-4 text-white text-uppercase">
-
-						Click para continuar
-
-					</h6>
-
-				</div>
-			</section>
-		</div>
+		<img src="/img/logo.png" alt="Imagen única" class="img-fluid w-75 mb-4">
+		<h6 class=" mb-4 mt-4 text-white text-uppercase">
+			Click para continuar
+		</h6>
+	</div>
 
 	<!-- Fin del contenido principal -->
 	<script>
-	//disparar el evento click cuando se toque el body
-	document.body.addEventListener('click', function() {
-		// Redirigir a la URL deseada
-		window.location.href = "{{ path('app_buscar') }}";
-	});
+		// disparar el evento click cuando se toque el body
+document.body.addEventListener('click', function () { // Redirigir a la URL deseada
+window.location.href = "{{ path('app_buscar') }}";
+});
 	</script>
 {% endblock %}
