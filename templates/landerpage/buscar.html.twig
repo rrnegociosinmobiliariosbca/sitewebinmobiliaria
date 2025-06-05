@@ -12,7 +12,16 @@
 			src: url('/img/Comfortaa-Regular.ttf') format('truetype');
 		}
 
+		.font-title-1 {
+			font-family: 'Comfortaa', sans-serif;
+			font-weight: 700; /* Peso negrita */
+			font-style: normal;
+			font-size: 2em; /* Tamaño de fuente */
+			letter-spacing: 0.1em;
+
+		}
 		.font-confortan {
+
 			font-family: 'Confortaa', sans-serif;
 			font-weight: 400; /* Peso normal */
 			font-style: normal;
@@ -26,10 +35,12 @@
 			border-radius: 10px;
 			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.13);
 			max-width: 600px; /* Ancho máximo para el texto */
-			color: #333; /* Color del texto */
 			transition: transform 0.3s ease, background-color 0.3s ease;
 
-
+		}
+		a {
+			text-decoration: none; /* Sin subrayado */
+			color: rgba(61, 63, 150, 1); /* Color del texto */
 		}
 		.font-confortan:hover {
 			transform: scale(1.05); /* Efecto de zoom al pasar el mouse */
@@ -40,7 +51,7 @@
 	<div class="content-wrapper">
 		<div class="row align-items-center justify-content-center  m-5">
 			<div class="col-12 text-center">
-				<p class="text-uppercase">
+				<p class="text-uppercase font-title-1">
 					Estas a un paso de
 				</p>
 				<p class="text-uppercase fw-bold">
@@ -49,26 +60,25 @@
 			</div>
 			<section class="gallery-section-fix col-sm-5">
 				<div class="font-confortan">
-					<a href="{{ path("app_buscar_ventas") }}" class="text-decoration-none">
-						Ventas
+					<a href="{{ path("app_buscar_arrendo") }}">
+						Arriendos
 					</a>
 				</div>
 			</section>
 			<section class="gallery-section-fix col-sm-5">
 				<div class="font-confortan">
-					<a href="{{ path("app_buscar_arrendo") }}" class=" text-decoration-none">
-						Arriendos
+					<a href="{{ path("app_buscar_ventas") }}">
+						Ventas
 					</a>
 				</div>
 			</section>
+
 			{% if app.user %}
 				<section class="gallery-section-fix col-sm-5">
-					<div class="container text-center">
-						<h2 class="text-uppercase">
-							<a href="{{ path("app_dashboard") }}" class=" text-decoration-none fw-bold">
-								agregar inmueble
-							</a>
-						</h2>
+					<div class="font-confortan">
+						<a href="{{ path("app_dashboard") }}" class=" text-decoration-none fw-bold">
+							agregar inmueble
+						</a>
 					</div>
 				</section>
 			{% endif %}
