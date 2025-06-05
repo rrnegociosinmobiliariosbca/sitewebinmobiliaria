@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\BienvenidoRepository;
 use App\Repository\PropertyDetalleRepository;
 use App\Repository\PropertyImageRepository;
 use App\Repository\PropertyRepository;
@@ -10,15 +11,14 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Filesystem\Filesystem;
 
 final class DashboardController extends AbstractController
 {
     #[Route('/dashboard', name: 'app_dashboard')]
     public function index(): Response
     {
-        return $this->render('dashboard/index.html.twig', [
-            'controller_name' => 'DashboardController',
-        ]);
+        return $this->render('dashboard/index.html.twig', []);
     }
     #[Route('/dashboard/endpoint/registrar_inmueble', name: 'app_dashboard_endpoint_registrar_inmueble')]
     public function app_dashboard_endpoint_registrar_inmueble(Request $request, PropertyRepository $propertyRepository): JsonResponse
@@ -147,6 +147,62 @@ final class DashboardController extends AbstractController
         return $this->json([
             'status' => 'success',
             'message' => 'Inmueble eliminado correctamente',
+        ]);
+    }
+
+    // enpoint para guardar imagen musica y texto de bienvenida
+
+    #[Route('/dashboard/endpoint/guardar_bienvenida', name: 'app_dashboard_endpoint_guardar_bienvenida', methods: ['POST'])]
+    public function app_dashboard_endpoint_guardar_bienvenida(
+        Request $request,
+        BienvenidoRepository $bienvenidoRepository
+    ): JsonResponse {
+        $texto = $request->request->get('texto');
+        /** @var UploadedFile|null $imagen */
+        $imagen = $request->files->get('imagen');
+        /** @var UploadedFile|null $audio */
+        $audio = $request->files->get('audio');
+
+        $bienvenido = $bienvenidoRepository->find(1) ?? new \App\Entity\Bienvenido();
+        $fs = new Filesystem();
+
+        $imgDir = $this->getParameter('imagenes_directory'); // /public/img
+
+        // Guardar imagen como bienvenido.jpg
+        if ($imagen) {
+            $imgPath = $imgDir . '/bienvenido.jpg';
+            if ($fs->exists($imgPath)) {
+                $fs->remove($imgPath);
+            }
+            $imagen->move($imgDir, 'bienvenido.jpg');
+            $bienvenido->setImagen('img/bienvenido.jpg');
+        }
+
+        // Guardar audio como bienvenido.mp3
+        if ($audio) {
+            $audioPath = $imgDir . '/bienvenido.mp3';
+            if ($fs->exists($audioPath)) {
+                $fs->remove($audioPath);
+            }
+            $audio->move($imgDir, 'bienvenido.mp3');
+            $bienvenido->setAudio('img/bienvenido.mp3');
+        }
+
+        // Guardar texto si no está vacío
+        if (!empty($texto)) {
+            $bienvenido->setTexto($texto);
+        }
+
+        $bienvenidoRepository->save($bienvenido, true);
+
+        return $this->json([
+            'status' => 'success',
+            'message' => 'Bienvenida guardada correctamente',
+            'data' => [
+                'imagen' => $bienvenido->getImagen(),
+                'audio' => $bienvenido->getAudio(),
+                'texto' => $bienvenido->getTexto(),
+            ],
         ]);
     }
 }

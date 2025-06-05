@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\PropertyDetalle;
 use App\Entity\PropertyImage;
+use App\Repository\BienvenidoRepository;
 use App\Repository\PropertyDetalleRepository;
 use App\Repository\PropertyImageRepository;
 use App\Repository\PropertyRepository;
@@ -25,9 +26,24 @@ final class LanderpageController extends AbstractController
     }
 
     #[Route('/inmobiliaria', name: 'app_inmobiliaria')]
-    public function landerpage(): Response
+    public function landerpage(BienvenidoRepository $bienvenidoRepository): Response
     {
-        return $this->render('landerpage/landing.html.twig');
+               // Obtener el objeto Bienvenido desde la base de datos
+        $bienvenido = $bienvenidoRepository->find(1);
+        if (!$bienvenido) {
+            // Si no existe, crear un nuevo objeto Bienvenido
+            $bienvenido = new \App\Entity\Bienvenido();
+            $bienvenido->setTexto('¡Bienvenido a la aplicación!');
+            $bienvenido->setImagen('img/bienvenido.jpg');
+            $bienvenido->setAudio('img/bienvenido.mp3');
+            $bienvenidoRepository->save($bienvenido, true);
+        }
+   
+        // Renderizar la vista del dashboard con el objeto Bienvenido
+       
+        return $this->render('landerpage/landing.html.twig',[
+            'bienvenido' => $bienvenido,
+        ]);
     }
     #[Route('/buscar', name: 'app_buscar')]
     public function buscar(): Response
@@ -192,7 +208,7 @@ final class LanderpageController extends AbstractController
 
     //eliminar porpetyDetalle
     #[Route('/property-detalle/delete/{id}', name: 'app_propertydetalle_delete')]
-    public function deleteDetalle(int $id,Request $request, PropertyDetalleRepository $detalleRepository): Response
+    public function deleteDetalle(int $id, Request $request, PropertyDetalleRepository $detalleRepository): Response
     {
         $detalle = $detalleRepository->find($id);
         if (!$detalle) {
@@ -209,7 +225,7 @@ final class LanderpageController extends AbstractController
 
     //eliminar imagen
     #[Route('/imagen/eliminar/{id}', name: 'app_imagen_eliminar')]
-    public function eliminarImagen(int $id,Request $request, PropertyImageRepository $imageRepository): Response
+    public function eliminarImagen(int $id, Request $request, PropertyImageRepository $imageRepository): Response
     {
         //si el id de la imagen es null, no se elimina
         if ($id === 0) {

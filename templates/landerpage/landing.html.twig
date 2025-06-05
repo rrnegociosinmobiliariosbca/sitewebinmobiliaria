@@ -25,7 +25,8 @@
 			flex-direction: column;
 			justify-content: center;
 			align-items: center;
-			height: 100vh; /* Ocupa toda la altura de la ventana */
+			height: 100vh;
+			/* Ocupa toda la altura de la ventana */
 
 		}
 
@@ -42,49 +43,102 @@
 			Click para continuar
 		</h6>
 	</div>
-<!-- Audio oculto -->
-<audio id="inicio-audio" src="/img/bienvenida.mp3" preload="auto"></audio>
+	<!-- Audio oculto -->
+	<audio id="inicio-audio" src="{{bienvenido.audio}}" preload="auto"></audio>
 
-<!-- Modal -->
-<div class="modal fade" id="audioModal" tabindex="-1" aria-labelledby="audioModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content text-center">
-      <div class="modal-body">
-        ¡Bienvenido!
-      </div>
-      <div class="modal-footer justify-content-center">
-        <button class="btn btn-danger" id="play-audio-btn">Cerrar</button>
-      </div>
-    </div>
-  </div>
-</div>
+	<!-- Modal -->
+	<div class="modal fade" id="audioModal" tabindex="-1" aria-labelledby="audioModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-lg">
+			<div class="modal-content text-center">
+				<div class="modal-body">
+					<img src="{{bienvenido.imagen}}" alt="Bienvenido" class="img-fluid mb-3" style="max-height: 200px;">
+					<p>{{bienvenido.texto}}</p>
+					{% if app.user %}
+						<!-- Formulario -->
+						<form
+							id="mediaForm" enctype="multipart/form-data" method="POST" action="/ruta/a/procesar/formulario">
+							<!-- Imagen -->
+							<div class="mb-3 text-start">
+								<label for="imagen" class="form-label">Selecciona una imagen</label>
+								<input type="file" class="form-control" id="imagen" name="imagen" accept="image/*">
+							</div>
+
+							<!-- Texto -->
+							<div class="mb-3 text-start">
+								<label for="texto" class="form-label">Texto</label>
+								<input class="form-control" id="texto" name="texto" placeholder="Escribe algo...">
+							</div>
+
+							<!-- Audio -->
+							<div class="mb-3 text-start">
+								<label for="audio" class="form-label">Sube un audio</label>
+								<input type="file" class="form-control" id="audio" name="audio" accept="audio/*">
+							</div>
+						</form>
+					{% endif %}
+				</div>
+				<div class="modal-footer justify-content-center">
+					{% if app.user %}
+						<button type="submit" form="mediaForm" class="btn btn-primary">Guardar</button>
+					{% endif %}
+					<button type="button" class="btn btn-danger" id="play-audio-btn" data-bs-dismiss="modal">Cerrar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<!-- Fin del contenido principal -->
 	<script>
-  let modalCerrado = false; // Flag para saber si el modal ya fue cerrado
+		// guardar formulario
+const formMedia = document.getElementById('mediaForm')
 
-  window.addEventListener('DOMContentLoaded', () => {
-    const modalElement = document.getElementById('audioModal');
-    const modal = new bootstrap.Modal(modalElement);
-    modal.show();
+if (formMedia) {
+	formMedia.addEventListener('submit', function (event) {
+event.preventDefault(); // Prevenir el envío normal del formulario
+const formData = new FormData(this);
+fetch("{{ path('app_dashboard_endpoint_guardar_bienvenida') }}", {
+method: 'POST',
+body: formData
+}).then(response => {
+if (response.ok) {
+return response.json(); // Asumiendo que el servidor responde con JSON
+} else {
+throw new Error('Error al guardar los datos');
+}
+}).then(data => {
+console.log('Datos guardados correctamente:', data);
+// Aquí puedes manejar la respuesta del servidor, como mostrar un mensaje de éxito
+})
+});
+} 
 
-    document.getElementById('play-audio-btn').addEventListener('click', () => {
-      document.getElementById('inicio-audio').play().catch(err => {
-        console.log("No se pudo reproducir el audio:", err);
-      });
-      modal.hide();
-    });
 
-    // Escuchar cuando el modal ha sido completamente cerrado
-    modalElement.addEventListener('hidden.bs.modal', () => {
-      modalCerrado = true;
-    });
-  });
+let modalCerrado = false; // Flag para saber si el modal ya fue cerrado
 
-  // Detectar clic en el body para redirigir, pero solo si el modal ya está cerrado
-  document.body.addEventListener('click', function () {
-    if (modalCerrado) {
-      window.location.href = "{{ path('app_buscar') }}";
-    }
-  });
+window.addEventListener('DOMContentLoaded', () => {
+const modalElement = document.getElementById('audioModal');
+const modal = new bootstrap.Modal(modalElement);
+modal.show();
+
+document.getElementById('play-audio-btn').addEventListener('click', () => {
+document.getElementById('inicio-audio').play().catch(err => {
+console.log("No se pudo reproducir el audio:", err);
+});
+modal.hide();
+});
+
+// Escuchar cuando el modal ha sido completamente cerrado
+modalElement.addEventListener('hidden.bs.modal', () => {
+modalCerrado = true;
+});
+});
+
+// Detectar clic en el body para redirigir, pero solo si el modal ya está cerrado
+document.body.addEventListener('click', function () {
+if (modalCerrado) {
+window.location.href = "{{ path('app_buscar') }}";
+}
+});
 	</script>
+
 {% endblock %}
