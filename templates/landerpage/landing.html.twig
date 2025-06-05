@@ -28,6 +28,11 @@
 			height: 100vh; /* Ocupa toda la altura de la ventana */
 
 		}
+
+		audio {
+			;
+			/* display: none;Oculta el elemento de audio */
+		}
 	</style>
 
 	<!-- Contenido principal -->
@@ -37,12 +42,49 @@
 			Click para continuar
 		</h6>
 	</div>
+<!-- Audio oculto -->
+<audio id="inicio-audio" src="/img/bienvenida.mp3" preload="auto"></audio>
 
+<!-- Modal -->
+<div class="modal fade" id="audioModal" tabindex="-1" aria-labelledby="audioModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content text-center">
+      <div class="modal-body">
+        ¡Bienvenido!
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button class="btn btn-danger" id="play-audio-btn">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
 	<!-- Fin del contenido principal -->
 	<script>
-		// disparar el evento click cuando se toque el body
-document.body.addEventListener('click', function () { // Redirigir a la URL deseada
-window.location.href = "{{ path('app_buscar') }}";
-});
+  let modalCerrado = false; // Flag para saber si el modal ya fue cerrado
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const modalElement = document.getElementById('audioModal');
+    const modal = new bootstrap.Modal(modalElement);
+    modal.show();
+
+    document.getElementById('play-audio-btn').addEventListener('click', () => {
+      document.getElementById('inicio-audio').play().catch(err => {
+        console.log("No se pudo reproducir el audio:", err);
+      });
+      modal.hide();
+    });
+
+    // Escuchar cuando el modal ha sido completamente cerrado
+    modalElement.addEventListener('hidden.bs.modal', () => {
+      modalCerrado = true;
+    });
+  });
+
+  // Detectar clic en el body para redirigir, pero solo si el modal ya está cerrado
+  document.body.addEventListener('click', function () {
+    if (modalCerrado) {
+      window.location.href = "{{ path('app_buscar') }}";
+    }
+  });
 	</script>
 {% endblock %}
