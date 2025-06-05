@@ -16,17 +16,22 @@
 			font-family: 'Comfortaa', sans-serif;
 			font-weight: 700; /* Peso negrita */
 			font-style: normal;
-			font-size: 2em; /* Tamaño de fuente */
-			letter-spacing: 0.1em;
-
+			font-size: 1em; /* Tamaño de fuente */
+			letter-spacing: 0.1em
 		}
 		.font-confortan {
+
+			background-image: url('/img/RRe.png');
+			background-size: cover; /* Ajusta la imagen al tamaño del contenedor */
+			background-position: center; /* Centra la imagen */
+			background-repeat: no-repeat; /* Evita que la imagen se repita */
 
 			font-family: 'Confortaa', sans-serif;
 			font-weight: 400; /* Peso normal */
 			font-style: normal;
-			font-size: 1.2em; /* Tamaño de fuente */
+			font-size: 2em; /* Tamaño de fuente */
 			letter-spacing: 0.1em;
+
 			line-height: 1.5;
 			text-align: center;
 			margin: 0 auto;
@@ -38,9 +43,14 @@
 			transition: transform 0.3s ease, background-color 0.3s ease;
 
 		}
+		.contorno-real {
+	
+			-webkit-text-stroke: 0.5px white;
+		}
 		a {
 			text-decoration: none; /* Sin subrayado */
-			color: rgba(61, 63, 150, 1); /* Color del texto */
+			
+			color: rgba(61, 63, 150, 1);/* Color del texto */
 		}
 		.font-confortan:hover {
 			transform: scale(1.05); /* Efecto de zoom al pasar el mouse */
@@ -59,14 +69,14 @@
 				</p>
 			</div>
 			<section class="gallery-section-fix col-sm-5">
-				<div class="font-confortan">
+				<div class="font-confortan contorno-real">
 					<a href="{{ path("app_buscar_arrendo") }}">
 						Arriendos
 					</a>
 				</div>
 			</section>
 			<section class="gallery-section-fix col-sm-5">
-				<div class="font-confortan">
+				<div class="font-confortan  contorno-real">
 					<a href="{{ path("app_buscar_ventas") }}">
 						Ventas
 					</a>
