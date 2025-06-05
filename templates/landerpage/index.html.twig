@@ -13,6 +13,7 @@
 		}
 
 		body {
+			;
 			/**background-image: url('/img/fondo.jpeg');
 			background-attachment: fixed;
 			background-size: cover;
@@ -64,17 +65,17 @@
 
 	<!-- Navbar -->
 	<nav class="navbar navbar-expand-lg" data-bs-theme="dark">
-	<div class="container-fluid">
-		<a class="navbar-brand d-flex flex-column align-items-start" href="{{ path("app_") }}">
-			<div class="d-flex align-items-center">
-				<img src="/img/logo.png" alt="Logo" width="48">
-				<span class="ms-2 text-uppercase">RR NEGOCIOS INMOBILIARIOS</span>
-			</div>
-			<small class="text-muted" style="font-size: 0.8rem;">
-				{% block subtitle %}{% endblock %}
-			</small>
-		</a>
-	</div>
+		<div class="container-fluid">
+			<a class="navbar-brand d-flex flex-column align-items-start" href="{{ path("app_") }}">
+				<div class="d-flex align-items-center">
+					<img src="/img/logo.png" alt="Logo" width="48">
+					<span class="ms-2 text-uppercase">RR NEGOCIOS INMOBILIARIOS</span>
+				</div>
+				<small class="text-muted" style="font-size: 0.8rem;">
+					{% block subtitle %}{% endblock %}
+				</small>
+			</a>
+		</div>
 	</nav>
 	{% block contenidolander %}
 		<!-- Contenido principal -->
@@ -107,11 +108,11 @@
 								<strong>RR NEGOCIOS INMOBILIARIOS</strong>
 							</span>
 							RR NEGOCIOS INMOBILIARIOS tiene como misión brindar servicios 
-																																																														                    inmobiliarios de intermediación en la venta, arriendo, administración de unidades
-																																																														                     residenciales y mantenimiento de inmuebles. Promover el desarrollo sostenible de nuevos
-																																																														                      emprendimientos inmobiliarios para contribuir al mejoramiento de la calidad de vida de
-																																																														                       los habitantes de Barrancabermeja y regiones aledañas, con un profundo sentido de
-																																																														                        pertenencia, integridad y responsabilidad.
+																																																																					                    inmobiliarios de intermediación en la venta, arriendo, administración de unidades
+																																																																					                     residenciales y mantenimiento de inmuebles. Promover el desarrollo sostenible de nuevos
+																																																																					                      emprendimientos inmobiliarios para contribuir al mejoramiento de la calidad de vida de
+																																																																					                       los habitantes de Barrancabermeja y regiones aledañas, con un profundo sentido de
+																																																																					                        pertenencia, integridad y responsabilidad.
 						</p>
 					</div>
 				</section>
@@ -129,9 +130,9 @@
 								<strong>RR NEGOCIOS INMOBILIARIOS</strong>
 							</span>
 							se posicionará en el mercado como una
-																																																														                 de las inmobiliarias preferidas e Barrancabermeja y la región con tecnología de punta y
-																																																														                  talento humano competente que minimicen
-																																																														                 el tiempo de operación de sus procesos y garanticen la satisfacción del cliente.
+																																																																					                 de las inmobiliarias preferidas e Barrancabermeja y la región con tecnología de punta y
+																																																																					                  talento humano competente que minimicen
+																																																																					                 el tiempo de operación de sus procesos y garanticen la satisfacción del cliente.
 						</p>
 						<p class="mt-2" style=" border:none; line-height: 1.38; margin-bottom: 8pt; margin-top: 0; padding:0; text-align: justify; white-space: normal;">
 
@@ -168,11 +169,37 @@
 		</div>
 	{% endblock %}
 	{% block banner %}
+		<!-- Banner clickable -->
 		<section class="section-banner">
 			<div class="container text-center">
-				<img src="/img/banner.png" alt="Imagen única" class="img-fluid w-100">
+				<img src="/img/banner.png" alt="Imagen única" class="img-fluid w-100" id="clickableBanner" style="cursor: pointer;">
 			</div>
 		</section>
+
+		<!-- Modal -->
+		<div class="modal fade" id="bannerModal" tabindex="-1" aria-labelledby="bannerModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content text-center">
+					<div class="modal-header">
+						<h5 class="modal-title w-100" id="bannerModalLabel">Contáctanos</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+					</div>
+					<div class="modal-body">
+						<p>¿Cómo deseas contactarnos?</p>
+						<div class="d-flex justify-content-center gap-3">
+							<a href="https://maps.app.goo.gl/finUehwdCkrxSm1z6" target="_blank" class="btn btn-outline-primary">
+								<i class="bi bi-geo-alt-fill"></i>
+								Ubicación
+							</a>
+							<a href="https://wa.me/573133744661" target="_blank" class="btn btn-outline-success">
+								<i class="bi bi-whatsapp"></i>
+								WhatsApp
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 		<!-- Footer -->
 		<footer class="text-white text-center py-3">
 			<span>
@@ -186,5 +213,16 @@
 				{% endif %}
 			</span>
 		</footer>
+
+		<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const banner = document.getElementById('clickableBanner');
+    const modal = new bootstrap.Modal(document.getElementById('bannerModal'));
+
+    banner.addEventListener('click', () => {
+      modal.show();
+    });
+  });
+</script>
 	{% endblock %}
 {% endblock %}
