@@ -1,0 +1,103 @@
+{% extends '/landerpage/index.html.twig' %}
+
+{% block title %}RR ARRIENDOS INMOBILIARIOS
+{% endblock %}
+{% block subtitle %}
+	PREVIA INMUEBLE
+{% endblock %}
+{% block contenidolander %}
+	<!-- Contenido principal -->
+	<div class="content-wrapper row">
+
+		{% for card in cards %}
+			<section class="gallery-section col-sm-12 col-md-6 col-lg-4 mb-4">
+				<div
+					class="card shadow-lg">
+					<!-- Carrusel -->
+					<div id="carouselExample{{ loop.index }}" class="carousel slide">
+
+						<div class="carousel-inner ratio ratio-16x9">
+							{% for img in card.imagenes %}
+								<div class="carousel-item {% if loop.first %}active{% endif %}">
+									<div class="position-relative w-100 h-100">
+										<img src="{{ img.url }}" class="d-block w-100 h-100 object-fit-cover" alt="Imagen">
+									</div>
+								</div>
+							{% endfor %}
+						</div>
+
+						<button class="carousel-control-prev" type="button" data-bs-target="#carouselExample{{ loop.index }}" data-bs-slide="prev">
+							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							<span class="visually-hidden">Anterior</span>
+						</button>
+						<button class="carousel-control-next" type="button" data-bs-target="#carouselExample{{ loop.index }}" data-bs-slide="next">
+							<span class="carousel-control-next-icon" aria-hidden="true"></span>
+							<span class="visually-hidden">Siguiente</span>
+						</button>
+					</div>
+
+					<!-- Información -->
+					<div class="card-body">
+						<ul class="list-group">
+
+							<li class="list-group-item">
+								<button type="button" class="btn btn-outline-dark btn-sm open-gallery" data-bs-toggle="modal" data-bs-target="#galleryModal" data-images="{{ card.imagenes|json_encode }}">
+									<i class="fa-solid fa-image"></i>
+									Ver Galería</button>
+							</li>
+                            <li class="list-group-item">CODIGO:
+								{{ card.tipoinmueble }}-{{ card.codigoinmueble }}</li>
+							<li class="list-group-item">INMUEBLE:
+								{{ card.inmueble }}</li>
+							<li class="list-group-item">VALOR: ${{ card.valor|number_format(0, '.', '.') }}</li>
+							<li class="list-group-item">
+								DIRECCIÓN:
+								{{ card.direccion }}
+								<a href="{{ card.ubicacion }}" class="btn btn-light btn-sm">Ubicación
+									<i class="fa-solid fa-location-dot text-danger"></i>
+								</a>
+							</li>
+							<li class="list-group-item">BARRIO:
+								{{ card.barrio }}</li>
+							<li class="list-group-item">OBSERVACIONES:
+								{{ card.observacion }}</li>
+				
+
+						<li
+							class="list-group-item">
+
+							<!-- Acordeón -->
+							<div class="accordion accordion-flush" id="accordionFlushExample{{ loop.index }}">
+								<div class="accordion-item">
+									<h2 class="accordion-header">
+										<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne{{ loop.index }}" aria-expanded="false" aria-controls="flush-collapseOne{{ loop.index }}">
+											Detalles
+										</button>
+									</h2>
+									<div id="flush-collapseOne{{ loop.index }}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample{{ loop.index }}">
+										<div class="accordion-body p-0">
+											<ul class="list-group">
+												{% for item in card.detalles %}
+													<li class="list-group-item">
+														<i class="bi bi-bookmark-star-fill"></i>
+														{{ item.texto }}
+														{% if app.user %}
+															<a href='{{ path('app_propertydetalle_delete', {"id": item.id}) }}' class="btn btn-danger btn-sm float-end ms-2" onclick="return confirm('¿Estás seguro de eliminar este detalle?');">
+																<i class="bi bi-trash-fill"></i>
+															</a>
+														{% endif %}
+													</li>
+												{% endfor %}
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</section>
+	{% endfor %}
+
+{% endblock %}

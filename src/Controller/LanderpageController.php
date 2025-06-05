@@ -28,7 +28,7 @@ final class LanderpageController extends AbstractController
     #[Route('/inmobiliaria', name: 'app_inmobiliaria')]
     public function landerpage(BienvenidoRepository $bienvenidoRepository): Response
     {
-               // Obtener el objeto Bienvenido desde la base de datos
+        // Obtener el objeto Bienvenido desde la base de datos
         $bienvenido = $bienvenidoRepository->find(1);
         if (!$bienvenido) {
             // Si no existe, crear un nuevo objeto Bienvenido
@@ -38,10 +38,10 @@ final class LanderpageController extends AbstractController
             $bienvenido->setAudio('img/bienvenido.mp3');
             $bienvenidoRepository->save($bienvenido, true);
         }
-   
+
         // Renderizar la vista del dashboard con el objeto Bienvenido
-       
-        return $this->render('landerpage/landing.html.twig',[
+
+        return $this->render('landerpage/landing.html.twig', [
             'bienvenido' => $bienvenido,
         ]);
     }
@@ -86,6 +86,48 @@ final class LanderpageController extends AbstractController
             ];
         }
         return $this->render('landerpage/ventas.html.twig', ['cards' => $data]);
+    }
+
+    #[Route('/ver/inmueble/{id}', name: 'app_ver_inmueble')]
+    public function ver_inmueble(int $id, PropertyRepository $propertyRepository): Response
+    {
+        $prop = $propertyRepository->find($id);
+
+        if (!$prop) {
+            //rebderisa un json con un mensaje de error
+            return $this->json(['error' => 'inmueble no encontrado'], Response::HTTP_NOT_FOUND);
+        }
+        $data = [];
+        $imagenes = array_map(fn($img) => [
+            'id' => $img->getId(),
+            'url' => $img->getUrl()
+        ], $prop->getPropertyImages()->toArray());
+
+        if (empty($imagenes)) {
+            $imagenes[] = [
+                'id' => 0,
+                'url' => '/img/Imagen_no_disponible.svg'
+            ];
+        }
+        $data[] = [
+            'id' => $prop->getId(),
+            'inmueble' => $prop->getInmueble(),
+            'valor' => $prop->getValor(),
+            'direccion' => $prop->getDireccion(),
+            'barrio' => $prop->getBarrio(),
+            'observacion' => $prop->getObservacion(),
+            'ubicacion' => $prop->getUbicacion(),
+            'codigoinmueble' => $prop->getCodigoInmueble(),
+            'tipoinmueble' => $prop->getTipoInmueble(),
+            'tipocontrato' => $prop->getTipoContrato(),
+            'imagenes' => $imagenes,
+            'detalles' => array_map(fn($det) => [
+                'id' => $det->getId(),
+                'texto' => $det->getTexto()
+            ], $prop->getPropertyDetalles()->toArray()),
+        ];
+
+        return $this->render('dashboard/visorinmueble.html.twig', ['cards' => $data]);
     }
     #[Route('/buscar/arriendo', name: 'app_buscar_arrendo')]
     public function arrendo(PropertyRepository $propertyRepository): Response
