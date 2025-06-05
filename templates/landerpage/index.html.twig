@@ -13,7 +13,7 @@
 		}
 
 		body {
-			background-image: url('/img/fondo.jpeg');
+			/**background-image: url('/img/fondo.jpeg');**/
 			background-attachment: fixed;
 			background-size: cover;
 			background-repeat: no-repeat;
@@ -25,7 +25,7 @@
 			top: 0;
 			width: 100%;
 			z-index: 1030;
-			background-color: rgba(0, 176, 240, 1);
+			background-color: rgba(61, 63, 150, 1);
 		}
 
 		.content-wrapper {
@@ -74,19 +74,7 @@
 	{% block contenidolander %}
 		<!-- Contenido principal -->
 		<div class="content-wrapper">
-			<section class="gallery-section">
-				<div class="container text-center">
 
-					<img src="/img/logo.png" alt="Imagen única" class="img-fluid w-75 mb-4">
-
-					<h2 class="mb-4 mt-4 text-white text-uppercase">
-						<a href="{{ path("app_buscar") }}" class="text-white text-decoration-none fw-bold">
-							Click para continuar
-						</a>
-					</h2>
-
-				</div>
-			</section>
 			<div class="row d-none">
 				<section class="gallery-section-fix col-sm-12">
 					<div class="container text-center">
@@ -114,11 +102,11 @@
 								<strong>RR NEGOCIOS INMOBILIARIOS</strong>
 							</span>
 							RR NEGOCIOS INMOBILIARIOS tiene como misión brindar servicios 
-																																																							                    inmobiliarios de intermediación en la venta, arriendo, administración de unidades
-																																																							                     residenciales y mantenimiento de inmuebles. Promover el desarrollo sostenible de nuevos
-																																																							                      emprendimientos inmobiliarios para contribuir al mejoramiento de la calidad de vida de
-																																																							                       los habitantes de Barrancabermeja y regiones aledañas, con un profundo sentido de
-																																																							                        pertenencia, integridad y responsabilidad.
+																																																														                    inmobiliarios de intermediación en la venta, arriendo, administración de unidades
+																																																														                     residenciales y mantenimiento de inmuebles. Promover el desarrollo sostenible de nuevos
+																																																														                      emprendimientos inmobiliarios para contribuir al mejoramiento de la calidad de vida de
+																																																														                       los habitantes de Barrancabermeja y regiones aledañas, con un profundo sentido de
+																																																														                        pertenencia, integridad y responsabilidad.
 						</p>
 					</div>
 				</section>
@@ -136,9 +124,9 @@
 								<strong>RR NEGOCIOS INMOBILIARIOS</strong>
 							</span>
 							se posicionará en el mercado como una
-																																																							                 de las inmobiliarias preferidas e Barrancabermeja y la región con tecnología de punta y
-																																																							                  talento humano competente que minimicen
-																																																							                 el tiempo de operación de sus procesos y garanticen la satisfacción del cliente.
+																																																														                 de las inmobiliarias preferidas e Barrancabermeja y la región con tecnología de punta y
+																																																														                  talento humano competente que minimicen
+																																																														                 el tiempo de operación de sus procesos y garanticen la satisfacción del cliente.
 						</p>
 						<p class="mt-2" style=" border:none; line-height: 1.38; margin-bottom: 8pt; margin-top: 0; padding:0; text-align: justify; white-space: normal;">
 
@@ -181,17 +169,17 @@
 			</div>
 		</section>
 		<!-- Footer -->
-<footer class="bg-dark text-white text-center py-3">
-    <span>
-        Todos los derechos reservados y Política de Protección de Datos - RR Negocios Inmobiliarios 2025 &copy;
-    </span>
-    <span style="margin-left: 10px;">
-        {% if app.user %}
-            <a href="{{ path('app_logout') }}" class="btn btn-link btn-sm text-white p-0 align-baseline" style="text-decoration: underline;">Cerrar sesión</a>
-        {% else %}
-            <a href="{{ path('app_login') }}" class="btn btn-link btn-sm text-white p-0 align-baseline" style="text-decoration: underline;">Iniciar sesión</a>
-        {% endif %}
-    </span>
-</footer>
+		<footer class="bg-dark text-white text-center py-3">
+			<span>
+				Todos los derechos reservados y Política de Protección de Datos - RR Negocios Inmobiliarios 2025 &copy;
+			</span>
+			<span style="margin-left: 10px;">
+				{% if app.user %}
+					<a href="{{ path('app_logout') }}" class="btn btn-link btn-sm text-white p-0 align-baseline" style="text-decoration: underline;">Cerrar sesión</a>
+				{% else %}
+					<a href="{{ path('app_login') }}" class="btn btn-link btn-sm text-white p-0 align-baseline" style="text-decoration: underline;">Iniciar sesión</a>
+				{% endif %}
+			</span>
+		</footer>
 	{% endblock %}
 {% endblock %}
