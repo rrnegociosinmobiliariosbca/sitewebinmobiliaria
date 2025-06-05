@@ -32,7 +32,7 @@
 	</style>
 
 	<!-- Contenido principal -->
-	<a href="{{ path("app_buscar") }}" class="text-white text-decoration-none fw-bold">
+
 		<div class="content-wrapper">
 			<section class="gallery-section">
 				<div class="container text-center">
@@ -46,5 +46,13 @@
 				</div>
 			</section>
 		</div>
-	</a>
+
+	<!-- Fin del contenido principal -->
+	<script>
+	//disparar el evento click cuando se toque el body
+	document.body.addEventListener('click', function() {
+		// Redirigir a la URL deseada
+		window.location.href = "{{ path('app_buscar') }}";
+	});
+	</script>
 {% endblock %}
