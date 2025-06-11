@@ -2,7 +2,8 @@
 
 {% block title %}RR ARRIENDOS INMOBILIARIOS
 {% endblock %}
-{% block subtitle %}  ARRIENDOS{% endblock %}
+{% block subtitle %}ARRIENDOS
+{% endblock %}
 {% block contenidolander %}
 <!-- Contenido principal -->
 <div class="content-wrapper row">
@@ -50,8 +51,9 @@
 					<li class="list-group-item">
 						<button type="button" class="btn btn-outline-dark btn-sm open-gallery" data-bs-toggle="modal"
 							data-bs-target="#galleryModal" data-images="{{ card.imagenes|json_encode }}">
-							<i class="fa-solid fa-image"></i> Ver Galería
-						</button>
+							<i class="fa-solid fa-image"></i>
+							Ver Galería</button>
+					</li>
 					<li class="list-group-item">INMUEBLE:
 						{{ card.inmueble }}</li>
 					<li class="list-group-item">VALOR: ${{ card.valor|number_format(0, '.', '.') }}</li>
@@ -76,13 +78,14 @@
 							data-bs-target="#modalImagen" data-id="{{ card.id }}">
 							Agregar Imagen
 						</button>
-					
+
 					</li>
 					{% else %}
-						<li class="list-group-item">
+					<li class="list-group-item">
 						<a href="https://api.whatsapp.com/send?phone=573133744661&text=Hola, quisiera más información: {{ url('app_ver_inmueble', {id: card.id}) }}"
 							class="btn btn-success btn-sm mt-2" target="_blank">
-							<i class="fa-brands fa-whatsapp"></i> Contactar por WhatsApp.
+							<i class="fa-brands fa-whatsapp"></i>
+							Contactar por WhatsApp.
 						</a>
 					</li>
 
@@ -114,6 +117,12 @@
 													onclick="return confirm('¿Estás seguro de eliminar este detalle?');">
 													<i class="bi bi-trash-fill"></i>
 												</a>
+												<button type="button"
+													class="btn btn-primary btn-sm float-end ms-2 edit-detalle-modal"
+													data-id="{{ item.id }}" data-text="{{ item.texto }}">
+													<i class="bi bi-pencil"></i>
+												</button>
+
 												{% endif %}
 											</li>
 											{% endfor %}
@@ -169,6 +178,7 @@
 					</div>
 					<div class="modal-body">
 						<input type="hidden" name="property_id" id="detallePropertyId">
+						<input type="hidden" name="detalle_id" id="idDetalle" value="0">
 						<div class="mb-3">
 							<label for="detalleTextoGlobal" class="form-label">Detalle</label>
 							<textarea class="form-control" id="detalleTextoGlobal" name="detalle" rows="3"
@@ -255,6 +265,7 @@
 			const modal = new bootstrap.Modal(document.getElementById("detalleModalGlobal"));
 			const form = document.getElementById("detalleFormGlobal");
 			const inputId = document.getElementById("detallePropertyId");
+			const inputIdDetalle = document.getElementById("idDetalle");
 			const titulo = document.getElementById("detalleModalGlobalLabel");
 			const textarea = document.getElementById("detalleTextoGlobal");
 
@@ -262,7 +273,7 @@
 				btn.addEventListener("click", () => {
 					const id = btn.getAttribute("data-id");
 					const inmueble = btn.getAttribute("data-inmueble");
-
+					inputIdDetalle.value = 0;
 					inputId.value = id;
 					titulo.textContent = `Agregar Detalle a ${inmueble}`;
 					textarea.value = ""; // limpiar textarea anterior
@@ -270,6 +281,18 @@
 					modal.show();
 				});
 			});
+			document.querySelectorAll(".edit-detalle-modal").forEach(btn => {
+				btn.addEventListener("click", () => {
+					const id = btn.getAttribute("data-id");
+					const texto = btn.getAttribute("data-text");
+					inputIdDetalle.value = id;
+					titulo.textContent = `Editar Detalle`;
+					textarea.value = texto; // cargar texto existente
+
+					modal.show();
+				});
+			});
+
 		});
 		document.addEventListener("DOMContentLoaded", function () {
 			const modal = new bootstrap.Modal(document.getElementById('galleryModal'));
@@ -296,4 +319,4 @@
 	</script>
 
 
-{% endblock %}
+	{% endblock %}

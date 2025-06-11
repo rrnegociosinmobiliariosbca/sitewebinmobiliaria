@@ -169,28 +169,39 @@ final class LanderpageController extends AbstractController
 
         return $this->render('landerpage/arrendo.html.twig', ['cards' => $data]);
     }
-    #[Route('/property-detalle/create', name: 'app_propertydetalle_create', methods: ['POST'])]
-    public function createDetalle(Request $request, PropertyRepository $propertyRepo, PropertyDetalleRepository $detalleRepository): Response
-    {
-        $propertyId = $request->request->get('property_id');
-        $detalleTexto = $request->request->get('detalle');
+ #[Route('/property-detalle/create', name: 'app_propertydetalle_create', methods: ['POST'])]
+public function createDetalle(
+    Request $request,
+    PropertyRepository $propertyRepo,
+    PropertyDetalleRepository $detalleRepository
+): Response {
+    $propertyId = (int) $request->request->get('property_id');
+    $detalleTexto = $request->request->get('detalle');
+    $detalleId = (int) $request->request->get('detalle_id');
 
+    if ($detalleId > 0) {
+        $detalle = $detalleRepository->find($detalleId);
+        if (!$detalle) {
+            throw $this->createNotFoundException("Detalle no encontrado.");
+        }
+    } else {
         $property = $propertyRepo->find($propertyId);
         if (!$property) {
             throw $this->createNotFoundException("Propiedad no encontrada.");
         }
-
         $detalle = new PropertyDetalle();
-        $detalle->setTexto($detalleTexto);
         $detalle->setProperty($property);
-        $detalleRepository->save($detalle);
-
-
-        if ($request->headers->get('referer') && str_contains($request->headers->get('referer'), 'arriendo')) {
-            return $this->redirectToRoute('app_buscar_arrendo'); // Ajusta según tu ruta
-        }
-        return $this->redirectToRoute('app_buscar_ventas'); // Ajusta según tu ruta
     }
+
+    $detalle->setTexto($detalleTexto);
+    $detalleRepository->save($detalle);
+
+    $referer = $request->headers->get('referer');
+    $ruta = (str_contains($referer, 'arriendo')) ? 'app_buscar_arrendo' : 'app_buscar_ventas';
+
+    return $this->redirectToRoute($ruta);
+}
+
 
     #[Route('/imagen/agregar', name: 'agregar_imagen', methods: ['POST'])]
     public function agregar(Request $request, SluggerInterface $slugger, PropertyRepository $propertyRepo, HttpClientInterface $httpClient, PropertyImageRepository $imageRepository): Response
